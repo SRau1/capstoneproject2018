@@ -86,29 +86,33 @@
         <div class="page-content">
           <div class="block block-strong">
 			<div style="text-align: center;"><img src="./images/LieToMe.jpg" alt="LieToMe Icon" width="350" height="197"></div>
+			
 			<a href="/test/" class="col button button-big button-fill button-raised color-green">Start</a>
-			<a href="/profiles/" class="col button button-outline item-content item-link">
-					<div class="item-inner">
-                    <div class="item-title">Profiles</div>
-                  </div>
-                </a>
-			<a href="/manual/" class="col button button-outline item-content item-link">
-			<div class="item-inner">
-                    <div class="item-title">Manual</div>
-                  </div>
-                </a>
-			<a href="/about/" class="col button button-outline item-content item-link">
-			<div class="item-inner">
-                    <div class="item-title">About</div>
-                  </div>
-                </a>
-				
+			
 			<a href="#" class="button button-raised button-fill popup-open" data-popup="#my-popup">Create Profile
 			<div class="item-inner">
                     <div class="item-title">Create Profile</div>
                   </div>
                 </a>
 				
+			<a href="/profiles/" class="col button button-outline item-content item-link">
+					<div class="item-inner">
+                    <div class="item-title">Profiles</div>
+                  </div>
+                </a>
+				
+			<a href="/manual/" class="col button button-outline item-content item-link">
+			<div class="item-inner">
+                    <div class="item-title">Manual</div>
+                  </div>
+                </a>
+				
+			<a href="/about/" class="col button button-outline item-content item-link">
+			<div class="item-inner">
+                    <div class="item-title">About</div>
+                  </div>
+                </a>
+					
           </div>
 
           <div class="block-title">Navigation</div>
@@ -171,7 +175,7 @@
             </div>
           </div>
           <div class="page-content">
-            <form class="list" id="my-form">
+            <form class="list" id="profile-form">
   <ul>
     <li>
       <div class="item-content item-input">
@@ -179,6 +183,7 @@
           <div class="item-title item-label">Name</div>
           <div class="item-input-wrap">
             <input type="text" name="name" placeholder="Your name"></input>
+			<span class="input-clear-button"></span>
           </div>
         </div>
       </div>
@@ -189,6 +194,7 @@
           <div class="item-title item-label">E-mail</div>
           <div class="item-input-wrap">
             <input type="email" name="email" placeholder="E-mail"></input>
+			<span class="input-clear-button"></span>
           </div>
         </div>
       </div>
@@ -221,7 +227,7 @@
   </ul>
 </form>
 <div class="block block-strong row">
-  <div class="col"><a class="button convert-form-to-data" href="#">Get Data</a></div>
+  <div class="col"><a class="button convert-form-to-data" href="#">Save Profile</a></div>
   <div class="col"><a class="button fill-form-from-data" href="#">Fill Form</a></div>
 </div>		
           </div>

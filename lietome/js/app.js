@@ -31,6 +31,27 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
+
+// Save profile
+$$('.convert-form-to-data').on('click', function(){
+  var formData = app.form.convertToData('#profile-form');
+  var myJSON = JSON.stringify(formData);
+  // alert for testing
+  alert(myJSON);
+  // Determine open Profile slot for new profile
+  var openslot;
+		for (var i = 1; i < 100;i++)
+		{
+		var test = localStorage.getItem("Profile" + i);
+		if (test == undefined)
+		{
+			openslot = i;
+			break;
+		}
+		}
+	// Save new profile
+	localStorage.setItem("Profile" + openslot, myJSON);
+});
 // Fill form for testing
 $$('.fill-form-from-data').on('click', function(){
   var formData = {
@@ -39,12 +60,10 @@ $$('.fill-form-from-data').on('click', function(){
     'gender': 'female',
     'toggle': ['yes'],
   }
-  app.form.fillFromData('#my-form', formData);
+  app.form.fillFromData('#profile-form', formData);
 });
 
-
-
-// Add the following scripts to test page
+// Scripts for Test page
 $$(document).on('page:init','.page[data-name="test"]', function(){
 	
 $$('.convert-form-to-data').on('click', function(){
@@ -55,7 +74,7 @@ $$('.convert-form-to-data').on('click', function(){
   localStorage.setItem("testJSON", myJSON);
 });
 
-// Reset form - doesn't work
+// Reset form - doesn't work - only deletes JSON data
 $$('.reset-form').on('click', function(){
 	app.form.removeFormData('#my-form');
 	});
@@ -65,7 +84,7 @@ $$('.reset-form').on('click', function(){
 // Note for later: Remove item from localstorage is localStorage.removeItem(key)
 
 
-// Add the following scripts to manual page
+// Scripts for Manual page
 $$(document).on('page:init','.page[data-name="manual"]', function(){
 	
 var myPhotoBrowserPopupDark = app.photoBrowser.create({
@@ -91,7 +110,7 @@ $$('.pb-standalone-video').on('click', function () {
 })
 
 
-// Add the following scripts to profiles page
+// Scripts for Profiles page
 $$(document).on('page:init','.page[data-name="profiles"]', function(){
 // Get profiles from JSON data
 var text = localStorage.getItem("testJSON")
@@ -106,7 +125,7 @@ var items = [];
 	booksslider: parsedJSON.booksslider
   });
 
-// Create profiles list
+// creates Profiles list
 var virtualList = app.virtualList.create({
   // List Element
   el: '.virtual-list',
