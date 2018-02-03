@@ -12,21 +12,21 @@
   </div>
   <div class="page-content">
   <div class="block-title"><b>Truth Analysis</b></div>
-    <div class="list">
+    <form class="list" id="my-form">
       <ul>
 	  <li class="align-top">
           <div class="item-content item-input">
             <div class="item-inner">
               <div class="item-title item-label">Question</div>
               <div class="item-input-wrap">
-                <textarea placeholder="Enter question asked here" class="resizable"></textarea>
+                 <input type="text" name="question" placeholder="Enter question asked">
               </div>
             </div>
           </div>
         </li>
         <li>
           <label class="item-checkbox item-content">
-            <input type="checkbox" name="checkbox" value="Books"/>
+            <input type="checkbox" name="bookscheckbox" value="Books"/>
             <i class="icon icon-checkbox"></i>
             <div class="item-inner">
               <div class="item-title">Books</div>
@@ -39,7 +39,7 @@
               <div class="item-title item-label">Slider</div>
               <div class="item-input-wrap">
                 <div class="range-slider range-slider-init" data-label="true">
-                  <input type="range" value="5" min="0" max="10" step="1">
+                  <input type="range" value="5" min="0" max="10" step="1" name="booksslider">
                 </div>
               </div>
             </div>
@@ -47,7 +47,7 @@
         </li>
         <li>
           <label class="item-checkbox item-content">
-            <input type="checkbox" name="checkbox" value="Movies"/>
+            <input type="checkbox" name="moviescheckbox" value="Movies"/>
             <i class="icon icon-checkbox"></i>
             <div class="item-inner">
               <div class="item-title">Movies</div>
@@ -60,7 +60,7 @@
               <div class="item-title item-label">Slider</div>
               <div class="item-input-wrap">
                 <div class="range-slider range-slider-init" data-label="true">
-                  <input type="range" value="5" min="0" max="10" step="1">
+                  <input type="range" value="5" min="0" max="10" step="1" name="moviesslider"></input>
                 </div>
               </div>
             </div>
@@ -68,7 +68,7 @@
         </li>
         <li>
           <label class="item-checkbox item-content">
-            <input type="checkbox" name="checkbox" value="Food"/>
+            <input type="checkbox" name="foodcheckbox" value="Food"/>
             <i class="icon icon-checkbox"></i>
             <div class="item-inner">
               <div class="item-title">Food</div>
@@ -81,7 +81,7 @@
               <div class="item-title item-label">Slider</div>
               <div class="item-input-wrap">
                 <div class="range-slider range-slider-init" data-label="true">
-                  <input type="range" value="5" min="0" max="10" step="1">
+                  <input type="range" value="5" min="0" max="10" step="1" name="foodslider"></input>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@
         </li>
         <li>
           <label class="item-checkbox item-content">
-            <input type="checkbox" name="checkbox" value="Drinks"/>
+            <input type="checkbox" name="drinkscheckbox" value="Drinks"/>
             <i class="icon icon-checkbox"></i>
             <div class="item-inner">
               <div class="item-title">Drinks</div>
@@ -102,7 +102,7 @@
               <div class="item-title item-label">Slider</div>
               <div class="item-input-wrap">
                 <div class="range-slider range-slider-init" data-label="true">
-                  <input type="range" value="5" min="0" max="10" step="1">
+                  <input type="range" value="5" min="0" max="10" step="1" name="drinksslider"></input>
                 </div>
               </div>
             </div>
@@ -110,9 +110,9 @@
         </li>
       </ul>
 	  <p class="row">
-        <input type="submit" value="Analyze" class="col button button-big button-fill button-raised color-green"/>
-		<a href="#" class="col button button-big button-fill button-raised color-red">Reset</a>
+        <a href="#" class="col button button-big button-fill button-raised color-green convert-form-to-data">Analyze</a>
+		<a href="#" class="col button button-big button-fill button-raised color-red reset-form">Reset</a>
       </p>
+	  </form>
     </div>
-	</div>
 	</div>
