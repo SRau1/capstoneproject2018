@@ -71,7 +71,7 @@ $$('.convert-form-to-data').on('click', function(){
   var myJSON = JSON.stringify(formData);
   // alert for testing
   alert(myJSON);
-  localStorage.setItem("testJSON", myJSON);
+  localStorage.setItem("Test1-1", myJSON);
 });
 
 // Reset form - doesn't work - only deletes JSON data
@@ -113,17 +113,21 @@ $$('.pb-standalone-video').on('click', function () {
 // Scripts for Profiles page
 $$(document).on('page:init','.page[data-name="profiles"]', function(){
 // Get profiles from JSON data
-var text = localStorage.getItem("testJSON")
-var parsedJSON =  JSON.parse(text);
-
 var items = [];
 
-  items.push({
-	title: 'test title',
-    question: parsedJSON.question,
-    bookscheckbox: parsedJSON.bookscheckbox,
-	booksslider: parsedJSON.booksslider
-  });
+for (var i = 1; i < 100; i++)
+{
+var text = localStorage.getItem("Profile" + i)
+if (text == undefined)
+{
+	break;
+}
+else
+{
+var parsedJSON =  JSON.parse(text);
+items.push(parsedJSON);
+}
+}
 
 // creates Profiles list
 var virtualList = app.virtualList.create({
@@ -135,19 +139,72 @@ var virtualList = app.virtualList.create({
   searchAll: function (query, items) {
     var found = [];
     for (var i = 0; i < items.length; i++) {
-      if (items[i].title.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+      if (items[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
     }
     return found; //return array with matched indexes
   },
-  // List item Template7 template
+  // List item template
+  itemTemplate:
+    '<li>' +
+      '<a href="/history/" class="item-link item-content">' +
+        '<div class="item-inner">' +
+          '<div class="item-title-row">' +
+            '<div class="item-title">{{name}}</div>' +
+          '</div>' +
+          '<div class="item-subtitle">{{email}},{{gender}}</div>' +
+        '</div>' +
+      '</a>' +
+    '</li>',
+  // Item height
+  height: app.theme === 'ios' ? 63 : 73,
+});})
+
+
+
+
+// Scripts for History page
+$$(document).on('page:init','.page[data-name="history"]', function(){
+// Get tests from JSON data
+var items = [];
+var profile = 1;
+
+for (var i = 1; i < 100; i++)
+{
+var text = localStorage.getItem("Test" + profile + "-" + i)
+if (text == undefined)
+{
+	break;
+}
+else
+{
+var parsedJSON =  JSON.parse(text);
+items.push(parsedJSON);
+}
+}
+
+// creates History list
+var virtualList = app.virtualList.create({
+  // List Element
+  el: '.virtual-list2',
+  // Pass array with items
+  items: items,
+  // Custom search function for searchbar
+  searchAll: function (query, items) {
+    var found = [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].question.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+    }
+    return found; //return array with matched indexes
+  },
+  // List item template
   itemTemplate:
     '<li>' +
       '<a href="#" class="item-link item-content">' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
-            '<div class="item-title">{{title}},{{question}}</div>' +
+            '<div class="item-title">{{question}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">{{bookscheckbox}},{{booksslider}}</div>' +
+          '<div class="item-subtitle">{{email}},{{gender}}</div>' +
         '</div>' +
       '</a>' +
     '</li>',

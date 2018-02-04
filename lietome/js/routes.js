@@ -27,6 +27,10 @@ routes = [
     path: '/formtest/',
     url: './pages/formtest.html',
   },
+  {
+    path: '/history/',
+    url: './pages/history.html',
+  },
   // Page Loaders & Router
   {
     path: '/page-loader-template7/:user/:userId/:posts/:postId/',
