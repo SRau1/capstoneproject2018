@@ -71,12 +71,33 @@ $$('.convert-form-to-data').on('click', function(){
   var myJSON = JSON.stringify(formData);
   // alert for testing
   alert(myJSON);
-  localStorage.setItem("Test1-1", myJSON);
+  
+  // Determine open Test slot for new test
+  var openslot;
+		for (var i = 1; i < 100;i++)
+		{
+		var test = localStorage.getItem("Test1-" + i);
+		if (test == undefined)
+		{
+			openslot = i;
+			break;
+		}
+		}
+	// Save new test
+	localStorage.setItem("Test1-" + openslot, myJSON);
 });
 
-// Reset form - doesn't work - only deletes JSON data
+// Reset form
 $$('.reset-form').on('click', function(){
-	app.form.removeFormData('#my-form');
+	document.getElementById('question').value = " ";
+	document.getElementById('bookscheckbox').checked = "";
+	app.range.setValue('#booksslider', 5);
+	document.getElementById('moviescheckbox').checked = "";
+	app.range.setValue('#moviesslider', 5);
+	document.getElementById('foodcheckbox').checked = "";
+	app.range.setValue('#foodslider', 5);
+	document.getElementById('drinkscheckbox').checked = "";
+	app.range.setValue('#drinksslider', 5);
 	});
 })
 
@@ -146,7 +167,7 @@ var virtualList = app.virtualList.create({
   // List item template
   itemTemplate:
     '<li>' +
-      '<a href="/history/" class="item-link item-content">' +
+      '<a href="#" class="item-link item-content">' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
             '<div class="item-title">{{name}}</div>' +
