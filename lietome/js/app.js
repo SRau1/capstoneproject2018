@@ -115,7 +115,7 @@ var myPhotoBrowserPopupDark = app.photoBrowser.create({
             caption: 'Woodkid - Run Boy Run (Official HD Video)'
         },
         {
-            url: 'http://lorempixel.com/1024/1024/sports/2/',
+            url: './images/LieToMe.jpg',
             caption: 'Second Caption Text'
         },
         {
