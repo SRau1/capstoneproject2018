@@ -51,6 +51,8 @@ $$('.convert-form-to-data').on('click', function(){
 		}
 	// Save new profile
 	localStorage.setItem("Profile" + openslot, myJSON);
+	// Set new profile as current profile
+	localStorage.setItem("CurrentProfile",openslot);
 });
 // Fill form for testing
 $$('.fill-form-from-data').on('click', function(){
@@ -102,9 +104,6 @@ $$('.reset-form').on('click', function(){
 })
 
 
-// Note for later: Remove item from localstorage is localStorage.removeItem(key)
-
-
 // Scripts for Manual page
 $$(document).on('page:init','.page[data-name="manual"]', function(){
 	
@@ -149,6 +148,8 @@ var parsedJSON =  JSON.parse(text);
 items.push(parsedJSON);
 }
 }
+
+// Note for later: Remove item from localstorage is localStorage.removeItem(key)
 
 // creates Profiles list
 var virtualList = app.virtualList.create({

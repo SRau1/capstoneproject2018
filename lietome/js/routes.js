@@ -31,6 +31,14 @@ routes = [
     path: '/history/',
     url: './pages/history.html',
   },
+  {
+    path: '/basetest/',
+    url: './pages/basetest.html',
+  },
+  {
+    path: '/quiz/',
+    url: './pages/quiz.html',
+  },
   // Page Loaders & Router
   {
     path: '/page-loader-template7/:user/:userId/:posts/:postId/',
