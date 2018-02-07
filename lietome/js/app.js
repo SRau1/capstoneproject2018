@@ -31,13 +31,26 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
+// Get Current Profile function -  in progress
+// Set Current Profile function - in progress
+function setCurrentProfile(){
+var currentprof = localStorage.getItem("CurrentProfile");
+var profilenum = JSON.parse(currentprof);
+var jsonprofile = localStorage.getItem("Profile" + profilenum);
+var parsedprof = JSON.parse(jsonprofile);
+document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
+}
+
+// Scripts for home page
+setCurrentProfile();
+
 
 // Save profile
-$$('.convert-form-to-data').on('click', function(){
+$$('.convert-profileform-to-data').on('click', function(){
   var formData = app.form.convertToData('#profile-form');
   var myJSON = JSON.stringify(formData);
   // alert for testing
-  alert(myJSON);
+  //alert(myJSON);
   // Determine open Profile slot for new profile
   var openslot;
 		for (var i = 1; i < 100;i++)
@@ -53,6 +66,7 @@ $$('.convert-form-to-data').on('click', function(){
 	localStorage.setItem("Profile" + openslot, myJSON);
 	// Set new profile as current profile
 	localStorage.setItem("CurrentProfile",openslot);
+	setCurrentProfile();
 });
 // Fill form for testing
 $$('.fill-form-from-data').on('click', function(){
@@ -68,7 +82,7 @@ $$('.fill-form-from-data').on('click', function(){
 // Scripts for Test page
 $$(document).on('page:init','.page[data-name="test"]', function(){
 	
-$$('.convert-form-to-data').on('click', function(){
+$$('.convert-testform-to-data').on('click', function(){
   var formData = app.form.convertToData('#my-form');
   var myJSON = JSON.stringify(formData);
   // alert for testing
@@ -93,13 +107,13 @@ $$('.convert-form-to-data').on('click', function(){
 $$('.reset-form').on('click', function(){
 	document.getElementById('question').value = " ";
 	document.getElementById('bookscheckbox').checked = "";
-	app.range.setValue('#booksslider', 5);
+	app.range.setValue('#booksslider', 0);
 	document.getElementById('moviescheckbox').checked = "";
-	app.range.setValue('#moviesslider', 5);
+	app.range.setValue('#moviesslider', 0);
 	document.getElementById('foodcheckbox').checked = "";
-	app.range.setValue('#foodslider', 5);
+	app.range.setValue('#foodslider', 0);
 	document.getElementById('drinkscheckbox').checked = "";
-	app.range.setValue('#drinksslider', 5);
+	app.range.setValue('#drinksslider', 0);
 	});
 })
 
