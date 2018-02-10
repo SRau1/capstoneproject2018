@@ -31,24 +31,26 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
-// Get Current Profile function -  in progress
-// Set Current Profile function - in progress
-function setCurrentProfile(){
+// Get Current Profile function -  returns current profile number
+function getCurrentProfile(){
 var currentprof = localStorage.getItem("CurrentProfile");
 var profilenum = JSON.parse(currentprof);
-var jsonprofile = localStorage.getItem("Profile" + profilenum);
+return profilenum;
+}
+// Set Current Profile function - in progress
+function setCurrentProfile(){
+var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
 var parsedprof = JSON.parse(jsonprofile);
 document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
 }
 
 // Scripts for home page
-setCurrentProfile();
+
 
 
 // Save profile
 $$('.convert-profileform-to-data').on('click', function(){
   var formData = app.form.convertToData('#profile-form');
-  var myJSON = JSON.stringify(formData);
   // alert for testing
   //alert(myJSON);
   // Determine open Profile slot for new profile
@@ -62,7 +64,12 @@ $$('.convert-profileform-to-data').on('click', function(){
 			break;
 		}
 		}
+  // Add value of openslot to Profile data
+  formData.slot = openslot;
+  // alert for testing
+  //alert(myJSON);	
 	// Save new profile
+	var myJSON = JSON.stringify(formData);
 	localStorage.setItem("Profile" + openslot, myJSON);
 	// Set new profile as current profile
 	localStorage.setItem("CurrentProfile",openslot);
@@ -84,23 +91,24 @@ $$(document).on('page:init','.page[data-name="test"]', function(){
 	
 $$('.convert-testform-to-data').on('click', function(){
   var formData = app.form.convertToData('#my-form');
-  var myJSON = JSON.stringify(formData);
-  // alert for testing
-  alert(myJSON);
   
   // Determine open Test slot for new test
   var openslot;
 		for (var i = 1; i < 100;i++)
 		{
-		var test = localStorage.getItem("Test1-" + i);
+		var test = localStorage.getItem("Test" + getCurrentProfile() + "-" + i);
 		if (test == undefined)
 		{
 			openslot = i;
 			break;
 		}
 		}
+	formData.testnum = openslot;
 	// Save new test
-	localStorage.setItem("Test1-" + openslot, myJSON);
+	var myJSON = JSON.stringify(formData);
+	// alert for testing
+    alert(myJSON);
+	localStorage.setItem("Test" + getCurrentProfile() + "-" + openslot, myJSON);
 });
 
 // Reset form
@@ -117,6 +125,47 @@ $$('.reset-form').on('click', function(){
 	});
 })
 
+
+
+/* Scripts for BaseLineTest page - needs work
+$$(document).on('page:init','.page[data-name="basetest"]', function(){
+	
+$$('.convert-testform-to-data').on('click', function(){
+  var formData = app.form.convertToData('#my-form');
+  
+  // Determine open Test slot for new test
+  var openslot;
+		for (var i = 1; i < 100;i++)
+		{
+		var test = localStorage.getItem("Test" + getCurrentProfile() + "-" + i);
+		if (test == undefined)
+		{
+			openslot = i;
+			break;
+		}
+		}
+	formData.testnum = openslot;
+	// Save new test
+	var myJSON = JSON.stringify(formData);
+	// alert for testing
+    alert(myJSON);
+	localStorage.setItem("Test" + getCurrentProfile() + "-" + openslot, myJSON);
+});
+
+// Reset form
+$$('.reset-form').on('click', function(){
+	document.getElementById('question').value = " ";
+	document.getElementById('bookscheckbox').checked = "";
+	app.range.setValue('#booksslider', 0);
+	document.getElementById('moviescheckbox').checked = "";
+	app.range.setValue('#moviesslider', 0);
+	document.getElementById('foodcheckbox').checked = "";
+	app.range.setValue('#foodslider', 0);
+	document.getElementById('drinkscheckbox').checked = "";
+	app.range.setValue('#drinksslider', 0);
+	});
+})
+*/
 
 // Scripts for Manual page
 $$(document).on('page:init','.page[data-name="manual"]', function(){
@@ -144,11 +193,13 @@ $$('.pb-standalone-video').on('click', function () {
 })
 
 
+// Note for later: Remove item from localstorage is localStorage.removeItem(key)
+
 // Scripts for Profiles page
 $$(document).on('page:init','.page[data-name="profiles"]', function(){
 // Get profiles from JSON data
 var items = [];
-
+var numprofiles = 0;
 for (var i = 1; i < 100; i++)
 {
 var text = localStorage.getItem("Profile" + i)
@@ -160,10 +211,13 @@ else
 {
 var parsedJSON =  JSON.parse(text);
 items.push(parsedJSON);
+numprofiles++;
 }
 }
 
-// Note for later: Remove item from localstorage is localStorage.removeItem(key)
+
+
+
 
 // creates Profiles list
 var virtualList = app.virtualList.create({
@@ -182,7 +236,7 @@ var virtualList = app.virtualList.create({
   // List item template
   itemTemplate:
     '<li>' +
-      '<a href="#" class="item-link item-content">' +
+      '<a href="#" class="item-link item-content select-profile{{slot}} back">' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
             '<div class="item-title">{{name}}</div>' +
@@ -193,7 +247,24 @@ var virtualList = app.virtualList.create({
     '</li>',
   // Item height
   height: app.theme === 'ios' ? 63 : 73,
-});})
+});
+
+
+// This function is used to create select-profile onclick functions
+function createProfileSelect(profilenumber)
+{
+	$$('.select-profile' + profilenumber).on('click', function(){
+	localStorage.setItem("CurrentProfile",profilenumber);
+	setCurrentProfile();
+	});
+}
+
+// Creates as many onclick select-profile functions as there are profiles
+for (var i = 1; i <= numprofiles; i++)
+{
+createProfileSelect(i);
+}
+	})
 
 
 
@@ -202,7 +273,8 @@ var virtualList = app.virtualList.create({
 $$(document).on('page:init','.page[data-name="history"]', function(){
 // Get tests from JSON data
 var items = [];
-var profile = 1;
+
+var profile = getCurrentProfile();
 
 for (var i = 1; i < 100; i++)
 {
