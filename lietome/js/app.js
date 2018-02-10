@@ -235,7 +235,7 @@ var virtualList = app.virtualList.create({
   },
   // List item template
   itemTemplate:
-    '<li class="swipeout">' +
+    '<li class="swipeout deleted-callback">' +
       '<a href="#" class="item-link item-content swipeout-content select-profile{{slot}} back">' +
 	  '<div class="item-media"><i class="icon icon-f7"></i></div>' +
         '<div class="item-inner">' +
@@ -252,6 +252,16 @@ var virtualList = app.virtualList.create({
   height: app.theme === 'ios' ? 63 : 73,
 });
 
+/* Need to figure out why this doesn't work
+function createDeleteCallback()
+{
+$$('.deleted-callback').on('swipeout:deleted', function () {
+  app.dialog.alert('Thanks, item removed!');
+});
+}
+
+createDeleteCallback();
+*/
 
 // This function is used to create select-profile onclick functions
 function createProfileSelect(profilenumber)
