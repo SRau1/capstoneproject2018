@@ -199,19 +199,19 @@ $$('.pb-standalone-video').on('click', function () {
 $$(document).on('page:init','.page[data-name="profiles"]', function(){
 // Get profiles from JSON data
 var items = [];
-var numprofiles = 0;
+var savedprofiles = [];
 for (var i = 1; i < 100; i++)
 {
-var text = localStorage.getItem("Profile" + i)
-if (text == undefined)
+var test = localStorage.getItem("Profile" + i)
+if (test == undefined)
 {
-	break;
+	continue;
 }
 else
 {
-var parsedJSON =  JSON.parse(text);
+var parsedJSON =  JSON.parse(test);
 items.push(parsedJSON);
-numprofiles++;
+savedprofiles.push(i);
 }
 }
 
@@ -235,8 +235,9 @@ var virtualList = app.virtualList.create({
   },
   // List item template
   itemTemplate:
-    '<li>' +
-      '<a href="#" class="item-link item-content select-profile{{slot}} back">' +
+    '<li class="swipeout">' +
+      '<a href="#" class="item-link item-content swipeout-content select-profile{{slot}} back">' +
+	  '<div class="item-media"><i class="icon icon-f7"></i></div>' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
             '<div class="item-title">{{name}}</div>' +
@@ -244,6 +245,8 @@ var virtualList = app.virtualList.create({
           '<div class="item-subtitle">{{email}},{{gender}}</div>' +
         '</div>' +
       '</a>' +
+	  '<div class="swipeout-actions-left">' +
+        '<a href="#" data-confirm="Are you sure you want to delete profile {{name}}?" class="swipeout-delete delete-profile{{slot}}">Delete</a></div>' +
     '</li>',
   // Item height
   height: app.theme === 'ios' ? 63 : 73,
@@ -260,10 +263,38 @@ function createProfileSelect(profilenumber)
 }
 
 // Creates as many onclick select-profile functions as there are profiles
-for (var i = 1; i <= numprofiles; i++)
+for (var i = 0; i < savedprofiles.length; i++)
 {
-createProfileSelect(i);
+createProfileSelect(savedprofiles[i]);
 }
+
+// This function is used to create delete-profile onclick functions
+function deleteProfile(profilenumber)
+{
+	$$('.delete-profile' + profilenumber).on('click', function(){
+	localStorage.removeItem("Profile" + profilenumber);
+	for (var i = 1; i < 100; i++)
+	{
+		var currenttest = "Test" + profilenumber + "-" + i;
+		var test = localStorage.getItem(currenttest)
+		if (test == undefined)
+	{
+	break;
+	}
+	else
+	{
+		localStorage.removeItem(currenttest);
+	}
+	}
+	});
+}
+
+// Creates as many onclick select-profile functions as there are profiles
+for (var i = 0; i < savedprofiles.length; i++)
+{
+deleteProfile(savedprofiles[i]);
+}
+
 	})
 
 
@@ -278,10 +309,10 @@ var profile = getCurrentProfile();
 
 for (var i = 1; i < 100; i++)
 {
-var text = localStorage.getItem("Test" + profile + "-" + i)
-if (text == undefined)
+var test = localStorage.getItem("Test" + profile + "-" + i)
+if (test == undefined)
 {
-	break;
+	continue;
 }
 else
 {
