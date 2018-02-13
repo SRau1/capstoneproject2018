@@ -326,7 +326,7 @@ if (test == undefined)
 }
 else
 {
-var parsedJSON =  JSON.parse(text);
+var parsedJSON =  JSON.parse(test);
 items.push(parsedJSON);
 }
 }

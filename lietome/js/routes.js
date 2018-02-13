@@ -39,6 +39,10 @@ routes = [
     path: '/quiz/',
     url: './pages/quiz.html',
   },
+  {
+    path: '/runPage/',
+    url: './pages/runPage.html',
+  },
   // Page Loaders & Router
   {
     path: '/page-loader-template7/:user/:userId/:posts/:postId/',
