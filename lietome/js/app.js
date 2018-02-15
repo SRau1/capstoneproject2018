@@ -215,10 +215,6 @@ savedprofiles.push(i);
 }
 }
 
-
-
-
-
 // creates Profiles list
 var virtualList = app.virtualList.create({
   // List Element
@@ -236,7 +232,7 @@ var virtualList = app.virtualList.create({
   // List item template
   itemTemplate:
     '<li class="swipeout deleted-callback">' +
-      '<a href="#" class="item-link item-content swipeout-content select-profile{{slot}} back">' +
+      '<a href="/runPage/" class="item-link item-content swipeout-content select-profile{{slot}}">' +
 	  '<div class="item-media"><i class="icon icon-f7"></i></div>' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
