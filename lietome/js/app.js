@@ -37,15 +37,19 @@ var currentprof = localStorage.getItem("CurrentProfile");
 var profilenum = JSON.parse(currentprof);
 return profilenum;
 }
-// Set Current Profile function - in progress
+/* Set Current Profile function - in progress
 function setCurrentProfile(){
 var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
 var parsedprof = JSON.parse(jsonprofile);
 document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
 }
-
-// Scripts for home page
-
+*/
+// Scripts for runPage
+$$(document).on('page:init','.page[data-name="runPage"]', function(){
+var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
+var parsedprof = JSON.parse(jsonprofile);
+document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
+});
 
 
 // Save profile
@@ -73,15 +77,13 @@ $$('.convert-profileform-to-data').on('click', function(){
 	localStorage.setItem("Profile" + openslot, myJSON);
 	// Set new profile as current profile
 	localStorage.setItem("CurrentProfile",openslot);
-	setCurrentProfile();
 });
 // Fill form for testing
 $$('.fill-form-from-data').on('click', function(){
   var formData = {
     'name': 'John',
-    'email': 'john@doe.com',
-    'gender': 'female',
-    'toggle': ['yes'],
+    'age': '26',
+    'gender': 'Male',
   }
   app.form.fillFromData('#profile-form', formData);
 });
@@ -238,7 +240,7 @@ var virtualList = app.virtualList.create({
           '<div class="item-title-row">' +
             '<div class="item-title">{{name}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">{{email}},{{gender}}</div>' +
+          '<div class="item-subtitle">{{age}},{{gender}}</div>' +
         '</div>' +
       '</a>' +
 	  '<div class="swipeout-actions-left">' +
@@ -264,7 +266,6 @@ function createProfileSelect(profilenumber)
 {
 	$$('.select-profile' + profilenumber).on('click', function(){
 	localStorage.setItem("CurrentProfile",profilenumber);
-	setCurrentProfile();
 	});
 }
 

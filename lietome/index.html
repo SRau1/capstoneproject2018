@@ -30,22 +30,6 @@
     <!-- Status bar overlay for fullscreen mode-->
     <div class="statusbar"></div>
     
-	<!-- Left panel with cover effect
-    <div class="panel panel-left panel-cover theme-dark">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-inner">
-              <div class="title">Left Panel</div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="block">Left panel content goes here</div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <!-- Your main view, should have "view-main" class -->
     <div class="view view-main ios-edges">
       <!-- Page, data-name contains page name which can be used in callbacks -->
@@ -53,12 +37,6 @@
         <!-- Top Navbar -->
         <div class="navbar">
           <div class="navbar-inner">
-            <div class="left">
-              <a href="#" class="link icon-only panel-open" data-panel="left">
-                <i class="icon f7-icons ios-only">menu</i>
-                <i class="icon material-icons md-only">menu</i>
-              </a>
-            </div>
             <div class="title sliding">Lie To Me</div>
           </div>
         </div>
@@ -139,12 +117,12 @@
         </div>
       </div>
     </li>
-    <li>
+	<li>
       <div class="item-content item-input">
         <div class="item-inner">
-          <div class="item-title item-label">E-mail</div>
+          <div class="item-title item-label">Age</div>
           <div class="item-input-wrap">
-            <input type="email" name="email" placeholder="E-mail"></input>
+            <input type="text" name="age" placeholder="Age"></input>
 			<span class="input-clear-button"></span>
           </div>
         </div>
@@ -156,21 +134,9 @@
           <div class="item-title item-label">Gender</div>
           <div class="item-input-wrap">
             <select name="gender">
-              <option value="male" selected>Male</option>
-              <option value="female">Female</option>
+              <option value="Male" selected>Male</option>
+              <option value="Female">Female</option>
             </select>
-          </div>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="item-content">
-        <div class="item-inner">
-          <div class="item-title">Toggle</div>
-          <div class="item-after">
-            <label class="toggle toggle-init">
-              <input type="checkbox" name="toggle" value="yes"><i class="toggle-icon"></i></input>
-            </label>
           </div>
         </div>
       </div>
