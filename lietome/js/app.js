@@ -37,26 +37,10 @@ var currentprof = localStorage.getItem("CurrentProfile");
 var profilenum = JSON.parse(currentprof);
 return profilenum;
 }
-/* Set Current Profile function - in progress
-function setCurrentProfile(){
-var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
-var parsedprof = JSON.parse(jsonprofile);
-document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
-}
-*/
-// Scripts for runPage
-$$(document).on('page:init','.page[data-name="runPage"]', function(){
-var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
-var parsedprof = JSON.parse(jsonprofile);
-document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
-});
-
 
 // Save profile
 $$('.convert-profileform-to-data').on('click', function(){
   var formData = app.form.convertToData('#profile-form');
-  // alert for testing
-  //alert(myJSON);
   // Determine open Profile slot for new profile
   var openslot;
 		for (var i = 1; i < 100;i++)
@@ -86,6 +70,13 @@ $$('.fill-form-from-data').on('click', function(){
     'gender': 'Male',
   }
   app.form.fillFromData('#profile-form', formData);
+});
+
+// Scripts for runPage
+$$(document).on('page:init','.page[data-name="runPage"]', function(){
+var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
+var parsedprof = JSON.parse(jsonprofile);
+document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
 });
 
 // Scripts for Test page
@@ -169,6 +160,7 @@ $$('.reset-form').on('click', function(){
 })
 */
 
+
 // Scripts for Manual page
 $$(document).on('page:init','.page[data-name="manual"]', function(){
 	
@@ -194,8 +186,6 @@ $$('.pb-standalone-video').on('click', function () {
 });
 })
 
-
-// Note for later: Remove item from localstorage is localStorage.removeItem(key)
 
 // Scripts for Profiles page
 $$(document).on('page:init','.page[data-name="profiles"]', function(){
