@@ -233,7 +233,7 @@ var virtualList = app.virtualList.create({
   },
   // List item template
   itemTemplate:
-    '<li class="swipeout deleted-callback">' +
+    '<li class="swipeout deleted-callback{{slot}}">' +
       '<a href="/runPage/" class="item-link item-content swipeout-content select-profile{{slot}}">' +
 	  '<div class="item-media"><i class="icon icon-f7"></i></div>' +
         '<div class="item-inner">' +
@@ -244,22 +244,37 @@ var virtualList = app.virtualList.create({
         '</div>' +
       '</a>' +
 	  '<div class="swipeout-actions-left">' +
-        '<a href="#" data-confirm="Are you sure you want to delete profile {{name}}?" class="swipeout-delete delete-profile{{slot}}">Delete</a></div>' +
+        '<a href="#" data-confirm="Are you sure you want to delete profile {{name}}?" data-confirm-title="Delete Profile" class="swipeout-delete">Delete</a></div>' +
     '</li>',
   // Item height
   height: app.theme === 'ios' ? 63 : 73,
 });
 
-/* Need to figure out why this doesn't work
-function createDeleteCallback()
+// This function is used to create delete profile callback functions
+function createDeleteCallback(profilenumber)
 {
-$$('.deleted-callback').on('swipeout:deleted', function () {
-  app.dialog.alert('Thanks, item removed!');
+$$('.deleted-callback' + profilenumber).on('swipeout:delete', function () {
+  localStorage.removeItem("Profile" + profilenumber);
+	for (var i = 1; i < 100; i++)
+	{
+		var currenttest = "Test" + profilenumber + "-" + i;
+		var test = localStorage.getItem(currenttest)
+		if (test == undefined)
+	{
+	break;
+	}
+	else
+	{
+		localStorage.removeItem(currenttest);
+	}
+	}
 });
 }
-
-createDeleteCallback();
-*/
+// Creates as many on delete callback functions as there are profiles
+for (var i = 0; i < savedprofiles.length; i++)
+{
+createDeleteCallback(savedprofiles[i]);
+}
 
 // This function is used to create select-profile onclick functions
 function createProfileSelect(profilenumber)
@@ -274,34 +289,6 @@ for (var i = 0; i < savedprofiles.length; i++)
 {
 createProfileSelect(savedprofiles[i]);
 }
-
-// This function is used to create delete-profile onclick functions
-function deleteProfile(profilenumber)
-{
-	$$('.delete-profile' + profilenumber).on('click', function(){
-	localStorage.removeItem("Profile" + profilenumber);
-	for (var i = 1; i < 100; i++)
-	{
-		var currenttest = "Test" + profilenumber + "-" + i;
-		var test = localStorage.getItem(currenttest)
-		if (test == undefined)
-	{
-	break;
-	}
-	else
-	{
-		localStorage.removeItem(currenttest);
-	}
-	}
-	});
-}
-
-// Creates as many onclick select-profile functions as there are profiles
-for (var i = 0; i < savedprofiles.length; i++)
-{
-deleteProfile(savedprofiles[i]);
-}
-
 	})
 
 
