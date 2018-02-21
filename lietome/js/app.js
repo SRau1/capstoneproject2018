@@ -53,9 +53,7 @@ $$('.convert-profileform-to-data').on('click', function(){
 		}
 		}
   // Add value of openslot to Profile data
-  formData.slot = openslot;
-  // alert for testing
-  //alert(myJSON);	
+  formData.slot = openslot;	
 	// Save new profile
 	var myJSON = JSON.stringify(formData);
 	localStorage.setItem("Profile" + openslot, myJSON);
@@ -72,14 +70,20 @@ $$('.fill-form-from-data').on('click', function(){
   app.form.fillFromData('#profile-form', formData);
 });
 
-// Scripts for runPage
+
+/*
+ Scripts for runPage
+ */
 $$(document).on('page:init','.page[data-name="runPage"]', function(){
 var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
 var parsedprof = JSON.parse(jsonprofile);
 document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
 });
 
-// Scripts for Test page
+
+/*
+ Scripts for Test page
+ */
 $$(document).on('page:init','.page[data-name="test"]', function(){
 	
 $$('.convert-testform-to-data').on('click', function(){
@@ -161,7 +165,9 @@ $$('.reset-form').on('click', function(){
 */
 
 
-// Scripts for Manual page
+/*
+ Scripts for Manual page
+ */
 $$(document).on('page:init','.page[data-name="manual"]', function(){
 	
 var myPhotoBrowserPopupDark = app.photoBrowser.create({
@@ -187,7 +193,9 @@ $$('.pb-standalone-video').on('click', function () {
 })
 
 
-// Scripts for Profiles page
+/*
+ Scripts for Profiles page
+ */
 $$(document).on('page:init','.page[data-name="profiles"]', function(){
 // Get profiles from JSON data
 var items = [];
@@ -284,7 +292,9 @@ createProfileSelect(savedprofiles[i]);
 
 
 
-// Scripts for History page
+/*
+ Scripts for History page
+ */
 $$(document).on('page:init','.page[data-name="history"]', function(){
 // Get tests from JSON data
 var items = [];
