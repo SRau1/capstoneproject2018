@@ -111,14 +111,16 @@ $$('.convert-testform-to-data').on('click', function(){
 // Reset form
 $$('.reset-form').on('click', function(){
 	document.getElementById('question').value = " ";
-	document.getElementById('bookscheckbox').checked = "";
-	app.range.setValue('#booksslider', 0);
-	document.getElementById('moviescheckbox').checked = "";
-	app.range.setValue('#moviesslider', 0);
-	document.getElementById('foodcheckbox').checked = "";
-	app.range.setValue('#foodslider', 0);
-	document.getElementById('drinkscheckbox').checked = "";
-	app.range.setValue('#drinksslider', 0);
+	document.getElementById('eyecheckbox').checked = "";
+	app.range.setValue('#eyeslider', 0);
+	document.getElementById('bodycheckbox').checked = "";
+	app.range.setValue('#bodyslider', 0);
+	document.getElementById('voicecheckbox').checked = "";
+	app.range.setValue('#voiceslider', 0);
+	document.getElementById('microcheckbox').checked = "";
+	app.range.setValue('#microslider', 0);
+	document.getElementById('fidgetcheckbox').checked = "";
+	app.range.setValue('#fidgetslider', 0);
 	});
 })
 
@@ -153,16 +155,18 @@ $$('.convert-baseform-to-data').on('click', function(){
 
 // Reset form
 $$('.reset-baseform').on('click', function(){
-	document.getElementById('questionselect').selected = "Custom Question";
+	document.getElementById('questionselect').value = "Custom Question";
 	document.getElementById('question').value = " ";
-	document.getElementById('bookscheckbox').checked = "";
-	app.range.setValue('#booksslider', 0);
-	document.getElementById('moviescheckbox').checked = "";
-	app.range.setValue('#moviesslider', 0);
-	document.getElementById('foodcheckbox').checked = "";
-	app.range.setValue('#foodslider', 0);
-	document.getElementById('drinkscheckbox').checked = "";
-	app.range.setValue('#drinksslider', 0);
+	document.getElementById('eyecheckbox').checked = "";
+	app.range.setValue('#eyeslider', 0);
+	document.getElementById('bodycheckbox').checked = "";
+	app.range.setValue('#bodyslider', 0);
+	document.getElementById('voicecheckbox').checked = "";
+	app.range.setValue('#voiceslider', 0);
+	document.getElementById('microcheckbox').checked = "";
+	app.range.setValue('#microslider', 0);
+	document.getElementById('fidgetcheckbox').checked = "";
+	app.range.setValue('#fidgetslider', 0);
 	});
 
 /* Calculate base scores	
