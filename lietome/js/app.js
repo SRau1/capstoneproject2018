@@ -386,7 +386,7 @@ var virtualList = app.virtualList.create({
           '<div class="item-title-row">' +
             '<div class="item-title">{{question}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">{{email}},{{gender}}</div>' +
+          '<div class="item-subtitle">{{eyecheckbox}}:{{eyeslider}}, {{bodycheckbox}}:{{bodyslider}}, {{voicecheckbox}}:{{voiceslider}}, {{microcheckbox}}:{{microslider}}, {{fidgetcheckbox}}:{{fidgetslider}}</div>' +
         '</div>' +
       '</a>' +
     '</li>',
