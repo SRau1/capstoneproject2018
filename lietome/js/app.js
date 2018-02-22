@@ -124,17 +124,19 @@ $$('.reset-form').on('click', function(){
 
 
 
-/* Scripts for BaseLineTest page - needs work
+/*
+ Scripts for BaseLineTest page - needs work
+ */
 $$(document).on('page:init','.page[data-name="basetest"]', function(){
 	
-$$('.convert-testform-to-data').on('click', function(){
-  var formData = app.form.convertToData('#my-form');
+$$('.convert-baseform-to-data').on('click', function(){
+  var formData = app.form.convertToData('#basetest-form');
   
   // Determine open Test slot for new test
   var openslot;
 		for (var i = 1; i < 100;i++)
 		{
-		var test = localStorage.getItem("Test" + getCurrentProfile() + "-" + i);
+		var test = localStorage.getItem("BaseTest" + getCurrentProfile() + "-" + i);
 		if (test == undefined)
 		{
 			openslot = i;
@@ -146,11 +148,12 @@ $$('.convert-testform-to-data').on('click', function(){
 	var myJSON = JSON.stringify(formData);
 	// alert for testing
     alert(myJSON);
-	localStorage.setItem("Test" + getCurrentProfile() + "-" + openslot, myJSON);
+	localStorage.setItem("BaseTest" + getCurrentProfile() + "-" + openslot, myJSON);
 });
 
 // Reset form
-$$('.reset-form').on('click', function(){
+$$('.reset-baseform').on('click', function(){
+	document.getElementById('questionselect').selected = "Custom Question";
 	document.getElementById('question').value = " ";
 	document.getElementById('bookscheckbox').checked = "";
 	app.range.setValue('#booksslider', 0);
@@ -161,8 +164,50 @@ $$('.reset-form').on('click', function(){
 	document.getElementById('drinkscheckbox').checked = "";
 	app.range.setValue('#drinksslider', 0);
 	});
-})
+
+/* Calculate base scores	
+$$('.calc-basescores').on('click', function(){
+//	Get results from JSON data
+var sumbasevar1;
+var sumbasevar2;
+var sumbasevar3;
+var sumbasevar4;
+var sumbasevar5;
+var numtests;
+
+for (var i = 1; i < 100; i++)
+{
+var retrievedtest = localStorage.getItem("BaseTest" + getCurrentProfile() + "-" + i)
+if (retrievedtest == undefined)
+{
+	continue;
+}
+else
+{
+var parsedJSON =  JSON.parse(retrievedtest);
+// Increase sums
+basevar1 += parsedJSON.basetell1
+basevar2 += parsedJSON.basetell2
+
+numtests++;
+}
+}
+// Calculate averages
+var var1avg = sumbasevar1 / numtests;
+
+// Store averages
+var averages
+{
+	fidgeting:var1avg
+}
+
+var jsonavg = JSON.stringify(averages);
+localStorage.setItem("BaselineResults" + getCurrentProfile(), averages);
+
+});
 */
+
+})
 
 
 /*

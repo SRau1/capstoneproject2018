@@ -43,6 +43,18 @@ routes = [
     path: '/runPage/',
     url: './pages/runPage.html',
   },
+  {
+    path: '/baseresult/',
+    url: './pages/baseresult.html',
+  },
+  {
+    path: '/testresult/',
+    url: './pages/testresult.html',
+  },
+  {
+    path: '/quizresult/',
+    url: './pages/quizresult.html',
+  },
   // Page Loaders & Router
   {
     path: '/page-loader-template7/:user/:userId/:posts/:postId/',

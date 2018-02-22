@@ -32,22 +32,21 @@ js/app.js
 js/routes.js
 pages/404.html
 pages/about.html
-pages/form.html
 pages/formtest.html
 pages/history.html
 pages/manual.html
-pages/page-loader-component.html
-pages/page-loader-template7.html
 pages/profiles.html
-pages/request-and-load.html
 pages/test.html
 apple-touch-icon.png
 launch.png
 pages/basetest.html
 pages/quiz.html
 pages/runPage.html
+pages/baseresult.html
+pages/testresult.html
+pages/quizresult.html
 
 NETWORK:
 *
 
-#v.1111111111111111111111
+#v.11111111111111111111111

@@ -11,13 +11,18 @@
     </div>
   </div>
   <div class="page-content">
-    <form class="list form-store-data" id="my-form">
+    <form class="list form-store-data" id="basetest-form">
       <ul>
 	  <li class="align-top">
           <div class="item-content item-input">
             <div class="item-inner">
               <div class="item-title item-label">Question</div>
               <div class="item-input-wrap">
+			  <select name="questionselect" id="questionselect">
+              <option value="Male" selected>Where are you from?</option>
+              <option value="Female">What high school did you go to?</option>
+			  <option value="custom">Custom Question</option>
+            </select>
                  <input type="text" name="question" id="question" placeholder="Enter question asked">
 				 <span class="input-clear-button"></span>
               </div>
@@ -110,8 +115,9 @@
         </li>
       </ul>
 	  <p class="row">
-        <a href="#" class="col button button-big button-fill button-raised color-green convert-form-to-data">Analyze</a>
-		<a href="#" class="col button button-big button-fill button-raised color-red reset-form">Reset</a>
+        <a href="#" class="col button button-big button-fill button-raised color-green convert-baseform-to-data">Save</a>
+		<a href="#" class="col button button-big button-fill button-raised color-red reset-baseform">Reset</a>
+		<a href="/baseresult/" class="col button button-big button-fill button-raised">Finish Baseline</a>
       </p>
 	  </form>
     </div>
