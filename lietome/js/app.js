@@ -171,14 +171,14 @@ $$('.reset-baseform').on('click', function(){
 
 /* Calculate base scores	
 $$('.calc-basescores').on('click', function(){
-//	Get results from JSON data
-var sumbasevar1;
-var sumbasevar2;
-var sumbasevar3;
-var sumbasevar4;
-var sumbasevar5;
-var numtests;
+var sumbaseeye;
+var sumbasebody;
+var sumbasevoice;
+var sumbasemicro;
+var sumbasefidget;
+var numbasetests;
 
+//	Get results from JSON data
 for (var i = 1; i < 100; i++)
 {
 var retrievedtest = localStorage.getItem("BaseTest" + getCurrentProfile() + "-" + i)
@@ -190,19 +190,29 @@ else
 {
 var parsedJSON =  JSON.parse(retrievedtest);
 // Increase sums
-basevar1 += parsedJSON.basetell1
-basevar2 += parsedJSON.basetell2
-
-numtests++;
+sumbaseeye += parsedJSON.eyeslider;
+sumbasebody += parsedJSON.bodyslider;
+sumbasevoice += parsedJSON.voiceslider;
+sumbasemicro += parsedJSON.microslider;
+sumbasefidget += parsedJSON.fidgetslider;
+numbasetests++;
 }
 }
 // Calculate averages
-var var1avg = sumbasevar1 / numtests;
+var avgbaseeye = sumbaseeye / numbasetests;
+var avgbasebody = sumbasebody / numbasetests;
+var avgbasevoice = sumbasevoice / numbasetests;
+var avgbasemicro = sumbasemicro / numbasetests;
+var avgbasefidget =sumbasefidget / numbasetests;
 
 // Store averages
 var averages
 {
-	fidgeting:var1avg
+	eyecontact:avgbaseeye
+	bodylanguage:avgbasebody
+	voicepattern:avgbasevoice
+	microexpressions:avgbasemicro
+	fidgeting:avgbasefidget
 }
 
 var jsonavg = JSON.stringify(averages);
