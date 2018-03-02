@@ -31,20 +31,6 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
-// Change theme
-$$('input[name="color-radio"]').on('change', function () {
-        if (this.checked) {
-          $$('.view').removeClass('color-theme-pink color-theme-blue color-theme-red color-theme-black color-theme-gray color-theme-orange color-theme-yellow color-theme-green color-theme-white');
-          $$('.view').addClass('color-theme-' + $$(this).val());
-        }
-      });
-      $$('input[name="layout-radio"]').on('change', function () {
-        if (this.checked) {
-          $$('.view').removeClass('theme-white theme-dark');
-          $$('.view').addClass(this.value);
-        }
-      });
-
 
 // Get Current Profile function -  returns current profile number
 function getCurrentProfile(){
@@ -84,6 +70,26 @@ $$('.fill-form-from-data').on('click', function(){
   }
   app.form.fillFromData('#profile-form', formData);
 });
+
+
+/*
+*	Scripts for Settings Page
+*/
+$$(document).on('page:init','.page[data-name="settings"]', function(){
+	
+$$('input[name="color-radio"]').on('change', function () {
+        if (this.checked) {
+          $$('.view').removeClass('color-theme-pink color-theme-blue color-theme-red color-theme-black color-theme-gray color-theme-orange color-theme-yellow color-theme-green color-theme-white');
+          $$('.view').addClass('color-theme-' + $$(this).val());
+        }
+      });
+$$('input[name="layout-radio"]').on('change', function () {
+        if (this.checked) {
+          $$('.view').removeClass('theme-white theme-dark');
+          $$('.view').addClass(this.value);
+        }
+      });
+})
 
 
 /*

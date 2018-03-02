@@ -55,6 +55,10 @@ routes = [
     path: '/quizresult/',
     url: './pages/quizresult.html',
   },
+  {
+    path: '/settings/',
+    url: './pages/settings.html',
+  },
   // Page Loaders & Router
   {
     path: '/page-loader-template7/:user/:userId/:posts/:postId/',
