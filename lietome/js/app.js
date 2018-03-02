@@ -142,12 +142,23 @@ $$('.reset-form').on('click', function(){
 
 
 /*
- Scripts for BaseLineTest page - needs work
+ Scripts for BaseLineTest page
  */
 $$(document).on('page:init','.page[data-name="basetest"]', function(){
-	
+$$('.question').hide();
+// Displays question text field when Custom Question is selected
+$$('.enableinput').on('change', function(){
+{
+if(document.getElementById('questionselect').value == 'Custom Question')
+$$('.question').show();
+else
+$$('.question').hide();
+}
+})
+
+// Saves baseline test form
 $$('.convert-baseform-to-data').on('click', function(){
-  var formData = app.form.convertToData('#basetest-form');
+  var formData = app.form.convertToData('#basetestform');
   
   // Determine open Test slot for new test
   var openslot;
@@ -170,17 +181,12 @@ $$('.convert-baseform-to-data').on('click', function(){
 
 // Reset form
 $$('.reset-baseform').on('click', function(){
-	document.getElementById('questionselect').value = "Custom Question";
-	document.getElementById('question').value = " ";
-	document.getElementById('eyecheckbox').checked = "";
+	document.getElementById('questionselect').value = "";
+	document.getElementById('question').value = "";
 	app.range.setValue('#eyeslider', 0);
-	document.getElementById('bodycheckbox').checked = "";
 	app.range.setValue('#bodyslider', 0);
-	document.getElementById('voicecheckbox').checked = "";
 	app.range.setValue('#voiceslider', 0);
-	document.getElementById('microcheckbox').checked = "";
 	app.range.setValue('#microslider', 0);
-	document.getElementById('fidgetcheckbox').checked = "";
 	app.range.setValue('#fidgetslider', 0);
 	});
 
