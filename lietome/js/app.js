@@ -431,4 +431,57 @@ var virtualList = app.virtualList.create({
   height: app.theme === 'ios' ? 63 : 73,
 });})
 
+/*
+ Scripts for BaseHistory page
+ */
+$$(document).on('page:init','.page[data-name="basehistory"]', function(){
+// Get tests from JSON data
+var items = [];
+
+var profile = getCurrentProfile();
+
+for (var i = 1; i < 100; i++)
+{
+var test = localStorage.getItem("BaseTest" + profile + "-" + i)
+if (test == undefined)
+{
+	continue;
+}
+else
+{
+var parsedJSON =  JSON.parse(test);
+items.push(parsedJSON);
+}
+}
+
+// creates History list
+var virtualList = app.virtualList.create({
+  // List Element
+  el: '.virtual-list3',
+  // Pass array with items
+  items: items,
+  // Custom search function for searchbar
+  searchAll: function (query, items) {
+    var found = [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].question.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+    }
+    return found; //return array with matched indexes
+  },
+  // List item template
+  itemTemplate:
+    '<li>' +
+      '<a href="#" class="item-link item-content">' +
+        '<div class="item-inner">' +
+          '<div class="item-title-row">' +
+            '<div class="item-title">{{questionselect}}</div>' +
+          '</div>' +
+          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
+        '</div>' +
+      '</a>' +
+    '</li>',
+  // Item height
+  height: app.theme === 'ios' ? 63 : 73,
+});})
+
 

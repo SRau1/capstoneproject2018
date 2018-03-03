@@ -59,6 +59,10 @@ routes = [
     path: '/settings/',
     url: './pages/settings.html',
   },
+  {
+    path: '/basehistory/',
+    url: './pages/basehistory.html',
+  },
   // Page Loaders & Router
   {
     path: '/page-loader-template7/:user/:userId/:posts/:postId/',
