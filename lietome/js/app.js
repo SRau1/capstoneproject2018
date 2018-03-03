@@ -99,6 +99,10 @@ $$(document).on('page:init','.page[data-name="runPage"]', function(){
 var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
 var parsedprof = JSON.parse(jsonprofile);
 document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
+
+var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
+var parsedbaseavg = JSON.parse(jsonbaseavg);
+document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Body Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Voice Pattern: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2) + "</p><p>Fidgeting: " + parsedbaseavg.fidgeting.toFixed(2); 
 });
 
 
@@ -196,14 +200,14 @@ $$('.reset-baseform').on('click', function(){
 	app.range.setValue('#fidgetslider', 0);
 	});
 
-/* Calculate base scores	
+// Calculate base scores	
 $$('.calc-basescores').on('click', function(){
-var sumbaseeye;
-var sumbasebody;
-var sumbasevoice;
-var sumbasemicro;
-var sumbasefidget;
-var numbasetests;
+var sumbaseeye = 0;
+var sumbasebody = 0;
+var sumbasevoice = 0;
+var sumbasemicro = 0;
+var sumbasefidget = 0;
+var numbasetests = 0;
 
 //	Get results from JSON data
 for (var i = 1; i < 100; i++)
@@ -217,11 +221,11 @@ else
 {
 var parsedJSON =  JSON.parse(retrievedtest);
 // Increase sums
-sumbaseeye += parsedJSON.eyeslider;
-sumbasebody += parsedJSON.bodyslider;
-sumbasevoice += parsedJSON.voiceslider;
-sumbasemicro += parsedJSON.microslider;
-sumbasefidget += parsedJSON.fidgetslider;
+sumbaseeye += parseInt(parsedJSON.eyeslider);
+sumbasebody += parseInt(parsedJSON.bodyslider);
+sumbasevoice += parseInt(parsedJSON.voiceslider);
+sumbasemicro += parseInt(parsedJSON.microslider);
+sumbasefidget += parseInt(parsedJSON.fidgetslider);
 numbasetests++;
 }
 }
@@ -230,23 +234,24 @@ var avgbaseeye = sumbaseeye / numbasetests;
 var avgbasebody = sumbasebody / numbasetests;
 var avgbasevoice = sumbasevoice / numbasetests;
 var avgbasemicro = sumbasemicro / numbasetests;
-var avgbasefidget =sumbasefidget / numbasetests;
+var avgbasefidget = sumbasefidget / numbasetests;
 
 // Store averages
-var averages
+var averages =
 {
-	eyecontact:avgbaseeye
-	bodylanguage:avgbasebody
-	voicepattern:avgbasevoice
-	microexpressions:avgbasemicro
-	fidgeting:avgbasefidget
-}
+	eyecontact:avgbaseeye,
+	bodylanguage:avgbasebody,
+	voicepattern:avgbasevoice,
+	microexpressions:avgbasemicro,
+	fidgeting:avgbasefidget,
+};
 
 var jsonavg = JSON.stringify(averages);
-localStorage.setItem("BaselineResults" + getCurrentProfile(), averages);
-
+localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
+// alert for testing
+    alert(jsonavg);
 });
-*/
+
 
 })
 
@@ -431,6 +436,7 @@ var virtualList = app.virtualList.create({
   height: app.theme === 'ios' ? 63 : 73,
 });})
 
+
 /*
  Scripts for BaseHistory page
  */
@@ -450,6 +456,10 @@ if (test == undefined)
 else
 {
 var parsedJSON =  JSON.parse(test);
+if (parsedJSON.questionselect == 'Custom Question')
+	{
+		parsedJSON.questionselect = parsedJSON.question;
+	}
 items.push(parsedJSON);
 }
 }
@@ -464,7 +474,7 @@ var virtualList = app.virtualList.create({
   searchAll: function (query, items) {
     var found = [];
     for (var i = 0; i < items.length; i++) {
-      if (items[i].question.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+      if (items[i].questionselect.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
     }
     return found; //return array with matched indexes
   },
