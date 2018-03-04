@@ -31,7 +31,6 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
-
 // Get Current Profile function -  returns current profile number
 function getCurrentProfile(){
 var currentprof = localStorage.getItem("CurrentProfile");
@@ -288,6 +287,14 @@ $$('.pb-standalone-video').on('click', function () {
  Scripts for Profiles page
  */
 $$(document).on('page:init','.page[data-name="profiles"]', function(){
+// Compare function to be used for sorting profiles
+function compare(a,b){
+	if (a.name < b.name)
+		return -1;
+	if (a.name > b.name)
+		return 1;
+	return 0;
+}
 // Get profiles from JSON data
 var items = [];
 var savedprofiles = [];
@@ -305,7 +312,7 @@ items.push(parsedJSON);
 savedprofiles.push(i);
 }
 }
-
+items.sort(compare);
 // creates Profiles list
 var virtualList = app.virtualList.create({
   // List Element
