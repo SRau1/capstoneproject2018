@@ -155,6 +155,7 @@ $$('.reset-form').on('click', function(){
  */
 $$(document).on('page:init','.page[data-name="basetest"]', function(){
 $$('.question').hide();
+$$('.date').hide();
 // Displays question text field when Custom Question is selected
 $$('.enableinput').on('change', function(){
 {
@@ -167,6 +168,10 @@ $$('.question').hide();
 
 // Saves baseline test form
 $$('.convert-baseform-to-data').on('click', function(){
+  // Save current date to form
+	var today = new Date();
+	document.getElementById('date').value = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear() + ' ' + today.getHours() + ':' + (today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes())
+  
   var formData = app.form.convertToData('#basetestform');
   
   // Determine open Test slot for new test
@@ -448,6 +453,14 @@ var virtualList = app.virtualList.create({
  Scripts for BaseHistory page
  */
 $$(document).on('page:init','.page[data-name="basehistory"]', function(){
+// Compare function to be used for sorting tests
+function compare(a,b){
+	if (a.date < b.date)
+		return -1;
+	if (a.date > b.date)
+		return 1;
+	return 0;
+}
 // Get tests from JSON data
 var items = [];
 
@@ -470,7 +483,7 @@ if (parsedJSON.questionselect == 'Custom Question')
 items.push(parsedJSON);
 }
 }
-
+items.sort(compare);
 // creates History list
 var virtualList = app.virtualList.create({
   // List Element
@@ -491,7 +504,7 @@ var virtualList = app.virtualList.create({
       '<a href="#" class="item-link item-content">' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
-            '<div class="item-title">{{questionselect}}</div>' +
+            '<div class="item-title">{{questionselect}} {{date}}</div>' +
           '</div>' +
           '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
         '</div>' +
