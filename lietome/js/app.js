@@ -109,8 +109,12 @@ document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedb
  Scripts for Test page
  */
 $$(document).on('page:init','.page[data-name="test"]', function(){
-	
+$$('.date').hide();	
 $$('.convert-testform-to-data').on('click', function(){
+// Save current date to form
+	var today = new Date();
+	document.getElementById('date').value = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear() + ' ' + today.getHours() + ':' + (today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes())
+	
   var formData = app.form.convertToData('#my-form');
   
   // Determine open Test slot for new test
@@ -399,6 +403,14 @@ createProfileSelect(savedprofiles[i]);
  Scripts for History page
  */
 $$(document).on('page:init','.page[data-name="history"]', function(){
+// Compare function to be used for sorting tests
+function compare(a,b){
+	if (a.date < b.date)
+		return -1;
+	if (a.date > b.date)
+		return 1;
+	return 0;
+}
 // Get tests from JSON data
 var items = [];
 
@@ -417,7 +429,7 @@ var parsedJSON =  JSON.parse(test);
 items.push(parsedJSON);
 }
 }
-
+items.sort(compare);
 // creates History list
 var virtualList = app.virtualList.create({
   // List Element
@@ -438,7 +450,7 @@ var virtualList = app.virtualList.create({
       '<a href="#" class="item-link item-content">' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
-            '<div class="item-title">{{question}}</div>' +
+            '<div class="item-title">{{question}} {{date}}</div>' +
           '</div>' +
           '<div class="item-subtitle">{{eyecheckbox}}:{{eyeslider}}, {{bodycheckbox}}:{{bodyslider}}, {{voicecheckbox}}:{{voiceslider}}, {{microcheckbox}}:{{microslider}}, {{fidgetcheckbox}}:{{fidgetslider}}</div>' +
         '</div>' +
