@@ -360,13 +360,27 @@ function createDeleteCallback(profilenumber)
 {
 $$('.deleted-callback' + profilenumber).on('swipeout:delete', function () {
   localStorage.removeItem("Profile" + profilenumber);
+  localStorage.removeItem("BaselineResults" + profilenumber);
 	for (var i = 1; i < 100; i++)
 	{
 		var currenttest = "Test" + profilenumber + "-" + i;
 		var test = localStorage.getItem(currenttest)
 		if (test == undefined)
 	{
-	break;
+	continue;
+	}
+	else
+	{
+		localStorage.removeItem(currenttest);
+	}
+	}
+	for (var i = 1; i < 100; i++)
+	{
+		var currenttest = "BaseTest" + profilenumber + "-" + i;
+		var test = localStorage.getItem(currenttest)
+		if (test == undefined)
+	{
+	continue;
 	}
 	else
 	{
