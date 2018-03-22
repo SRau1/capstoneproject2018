@@ -159,14 +159,21 @@ $$('.reset-form').on('click', function(){
  */
 $$(document).on('page:init','.page[data-name="basetest"]', function(){
 $$('.question').hide();
+$$('.input-clear-button').hide();
 $$('.date').hide();
 // Displays question text field when Custom Question is selected
 $$('.enableinput').on('change', function(){
 {
 if(document.getElementById('questionselect').value == 'Custom Question')
+{
 $$('.question').show();
+$$('.input-clear-button').show();
+}
 else
+{
 $$('.question').hide();
+$$('.input-clear-button').hide();
+}
 }
 })
 
