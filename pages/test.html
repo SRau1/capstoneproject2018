@@ -1,0 +1,121 @@
+<div class="page" data-name="test">
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Subject Questioning</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <form class="list" id="my-form">
+      <ul>
+	  <li class="align-top">
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label">Question</div>
+              <div class="item-input-wrap">
+                 <input type="text" name="question" id="question" placeholder="Enter question asked">
+				 <span class="input-clear-button"></span>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title">Eye Contact <a href="#" class="popup-open" data-popup="#eye-popup"><i class="f7-icons">help</i></a></div>
+              <div class="item-input-wrap">
+                <div class="range-slider range-slider-init" data-label="true" id="eyeslider">
+                  <input type="range" value="0" min="0" max="10" step="1" name="eyeslider">
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+		
+		<li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title">Body Language <a href="#" class="popup-open" data-popup="#eye-popup"><i class="f7-icons">help</i></a></div>
+              <div class="item-input-wrap">
+                <div class="range-slider range-slider-init" data-label="true" id="bodyslider">
+                  <input type="range" value="0" min="0" max="10" step="1" name="bodyslider"></input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+       
+		<li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title">Voice Pattern <a href="#" class="popup-open" data-popup="#eye-popup"><i class="f7-icons">help</i></a></div>
+              <div class="item-input-wrap">
+                <div class="range-slider range-slider-init" data-label="true" id="voiceslider">
+                  <input type="range" value="0" min="0" max="10" step="1" name="voiceslider"></input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+		
+		<li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title">Microexpressions <a href="#" class="popup-open" data-popup="#eye-popup"><i class="f7-icons">help</i></a></div>
+              <div class="item-input-wrap">
+                <div class="range-slider range-slider-init" data-label="true" id="microslider">
+                  <input type="range" value="0" min="0" max="10" step="1" name="microslider"></input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+		
+		<li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title">Fidgeting <a href="#" class="popup-open" data-popup="#eye-popup"><i class="f7-icons">help</i></a></div>
+              <div class="item-input-wrap">
+                <div class="range-slider range-slider-init" data-label="true" id="fidgetslider">
+                  <input type="range" value="0" min="0" max="10" step="1" name="fidgetslider"></input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+		
+		<li>
+            <input type="text" placeholder="Current Date" readonly="readonly" id="date" name="date" class="date"/>
+          </li>
+		  
+      </ul>
+	  <p class="row">
+        <a href="/testresult/" class="col button button-big button-fill button-raised color-green convert-testform-to-data">Analyze</a>
+		<a href="#" class="col button button-big button-fill button-raised color-red reset-form">Reset</a>
+      </p>
+	  </form>
+    </div>
+	<!-- Eye pop up -->
+	<div class="popup" id="eye-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Eye Contact</div>
+              <div class="right">
+                <a href="#" class="link popup-close">Close</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+		  <div style="text-align: center;"><img src="./images/surprise.jpg" alt="Surprise Icon"></div>
+		  </div>
+		  </div>
+		  </div>
+		  </div>
+	</div>
