@@ -101,7 +101,28 @@ document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedp
 
 var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
 var parsedbaseavg = JSON.parse(jsonbaseavg);
-document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Body Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Voice Pattern: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2) + "</p><p>Fidgeting: " + parsedbaseavg.fidgeting.toFixed(2); 
+document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Body Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Voice Pattern: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2) + "</p><p>Fidgeting: " + parsedbaseavg.fidgeting.toFixed(2);
+
+var sumtruth = 0;
+var numtests = 0;
+for (var i = 1; i < 100; i++)
+{
+var test = localStorage.getItem("Test" + getCurrentProfile() + "-" + i)
+if (test == undefined)
+{
+	continue;
+}
+else
+{
+var parsedJSON =  JSON.parse(test);
+sumtruth += parsedJSON.truthresult;
+numtests++;
+}
+}
+var avgtruth = 100 - (sumtruth / numtests);
+
+document.getElementById("averagetruth").innerHTML = "<p>Truth Average: " + avgtruth.toFixed(2) + "%";
+
 });
 
 
@@ -129,6 +150,13 @@ $$('.convert-testform-to-data').on('click', function(){
 		}
 		}
 	formData.testnum = openslot;
+	
+	// Perform Truth Analysis
+	var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
+    var parsedbaseavg = JSON.parse(jsonbaseavg);
+	var testvariance = Math.abs(formData.eyeslider - parsedbaseavg.eyecontact) + Math.abs(formData.bodyslider - parsedbaseavg.bodylanguage) + Math.abs(formData.voiceslider - parsedbaseavg.voicepattern) + Math.abs(formData.microslider - parsedbaseavg.microexpressions) + Math.abs(formData.fidgetslider - parsedbaseavg.fidgeting)
+	var truthpercent = (testvariance / parsedbaseavg.maxvariance) * 100;
+	formData.truthresult = truthpercent;
 	// Save new test
 	var myJSON = JSON.stringify(formData);
 	// alert for testing
@@ -492,7 +520,7 @@ var virtualList = app.virtualList.create({
           '<div class="item-title-row">' +
             '<div class="item-title">{{question}} {{date}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">{{eyecheckbox}}:{{eyeslider}}, {{bodycheckbox}}:{{bodyslider}}, {{voicecheckbox}}:{{voiceslider}}, {{microcheckbox}}:{{microslider}}, {{fidgetcheckbox}}:{{fidgetslider}}</div>' +
+          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
         '</div>' +
       '</a>' +
     '</li>',
