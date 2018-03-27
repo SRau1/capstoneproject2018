@@ -251,7 +251,25 @@ var avgbasevoice = sumbasevoice / numbasetests;
 var avgbasemicro = sumbasemicro / numbasetests;
 var avgbasefidget = sumbasefidget / numbasetests;
 
-// Store averages
+// Calculate maximum variance
+var maximumvariance = 0;
+function calcmaxvariance(avg){
+if (avg <= 5)
+	{
+		maximumvariance += (10 - avg);
+	}
+	else
+	{
+		maximumvariance += avg;
+	}	
+}
+calcmaxvariance(avgbaseeye);
+calcmaxvariance(avgbasebody);
+calcmaxvariance(avgbasevoice);
+calcmaxvariance(avgbasemicro);
+calcmaxvariance(avgbasefidget);
+
+// Store averages/variance
 var averages =
 {
 	eyecontact:avgbaseeye,
@@ -259,6 +277,7 @@ var averages =
 	voicepattern:avgbasevoice,
 	microexpressions:avgbasemicro,
 	fidgeting:avgbasefidget,
+	maxvariance:maximumvariance,
 };
 
 var jsonavg = JSON.stringify(averages);
