@@ -101,28 +101,31 @@ document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedp
 
 var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
 var parsedbaseavg = JSON.parse(jsonbaseavg);
+if (parsedbaseavg != null)
+{
 document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Body Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Voice Pattern: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2) + "</p><p>Fidgeting: " + parsedbaseavg.fidgeting.toFixed(2);
-
+}
 var sumtruth = 0;
 var numtests = 0;
 for (var i = 1; i < 100; i++)
 {
 var test = localStorage.getItem("Test" + getCurrentProfile() + "-" + i)
-if (test == undefined)
-{
+	if (test == undefined)
+	{
 	continue;
+	}
+	else
+	{
+	var parsedJSON =  JSON.parse(test);
+	sumtruth += parsedJSON.truthresult;
+	numtests++;
+	}
 }
-else
+if (numtests != 0)
 {
-var parsedJSON =  JSON.parse(test);
-sumtruth += parsedJSON.truthresult;
-numtests++;
-}
-}
-var avgtruth = 100 - (sumtruth / numtests);
-
+var avgtruth =(sumtruth / numtests);
 document.getElementById("averagetruth").innerHTML = "<p>Truth Average: " + avgtruth.toFixed(2) + "%";
-
+}
 });
 
 
@@ -154,14 +157,22 @@ $$('.convert-testform-to-data').on('click', function(){
 	// Perform Truth Analysis
 	var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
     var parsedbaseavg = JSON.parse(jsonbaseavg);
+	if (parsedbaseavg == null)
+	{
+		localStorage.setItem("CurrentTest", null);
+	}
+	else {
 	var testvariance = Math.abs(formData.eyeslider - parsedbaseavg.eyecontact) + Math.abs(formData.bodyslider - parsedbaseavg.bodylanguage) + Math.abs(formData.voiceslider - parsedbaseavg.voicepattern) + Math.abs(formData.microslider - parsedbaseavg.microexpressions) + Math.abs(formData.fidgetslider - parsedbaseavg.fidgeting)
-	var truthpercent = (testvariance / parsedbaseavg.maxvariance) * 100;
-	formData.truthresult = truthpercent;
+	var liepercent = (testvariance / parsedbaseavg.maxvariance) * 100;
+	formData.lieresult = liepercent;
+	formData.truthresult = 100 - liepercent;
 	// Save new test
 	var myJSON = JSON.stringify(formData);
+	localStorage.setItem("Test" + getCurrentProfile() + "-" + openslot, myJSON);
+	localStorage.setItem("CurrentTest", myJSON);
 	// alert for testing
     alert(myJSON);
-	localStorage.setItem("Test" + getCurrentProfile() + "-" + openslot, myJSON);
+	}
 });
 
 // Reset form
@@ -180,8 +191,64 @@ $$('.reset-form').on('click', function(){
 	});
 })
 
-
-
+/*
+Scripts for Test Result page
+*/
+$$(document).on('page:init','.page[data-name="testresult"]', function(){
+var currenttestjson = localStorage.getItem("CurrentTest");
+var parsedcurrenttest = JSON.parse(currenttestjson);
+if (parsedcurrenttest == null)
+{
+	document.getElementById('resultcontent').innerHTML = "Error: No baseline data"
+}
+else
+{
+	if (parseInt(parsedcurrenttest.lieresult) >= 0 && parseInt(parsedcurrenttest.lieresult) < 10)
+	{
+		document.getElementById('resultcontent').innerHTML = "Truth: Extremely Likely";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 10 && parseInt(parsedcurrenttest.lieresult) <= 20)
+	{
+		document.getElementById('resultcontent').innerHTML = "Truth: Very Likely";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 20 && parseInt(parsedcurrenttest.lieresult) <= 30)
+	{
+		document.getElementById('resultcontent').innerHTML = "Truth: Likely";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 30 && parseInt(parsedcurrenttest.lieresult) <= 40)
+	{
+		document.getElementById('resultcontent').innerHTML = "Truth: Somewhat Likely";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 40 && parseInt(parsedcurrenttest.lieresult) <= 50)
+	{
+		document.getElementById('resultcontent').innerHTML = "Truth: Slightly";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 50 && parseInt(parsedcurrenttest.lieresult) <= 60)
+	{
+		document.getElementById('resultcontent').innerHTML = "Lie: Slightly";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 60 && parseInt(parsedcurrenttest.lieresult) <= 70)
+	{
+		document.getElementById('resultcontent').innerHTML = "Lie: Somewhat Likely";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 70 && parseInt(parsedcurrenttest.lieresult) <= 80)
+	{
+		document.getElementById('resultcontent').innerHTML = "Lie: Likely";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 80 && parseInt(parsedcurrenttest.lieresult) <= 90)
+	{
+		document.getElementById('resultcontent').innerHTML = "Lie: Very Likely";
+	}
+	else if (parseInt(parsedcurrenttest.lieresult) > 90 && parseInt(parsedcurrenttest.lieresult) <= 100)
+	{
+		document.getElementById('resultcontent').innerHTML = "Lie: Extremely Likely";
+	}
+	else
+	{
+	document.getElementById('resultcontent').innerHTML = "Results inconclusive.";
+	}
+}
+});
 /*
  Scripts for BaseLineTest page
  */
@@ -227,9 +294,9 @@ $$('.convert-baseform-to-data').on('click', function(){
 	formData.testnum = openslot;
 	// Save new test
 	var myJSON = JSON.stringify(formData);
+	localStorage.setItem("BaseTest" + getCurrentProfile() + "-" + openslot, myJSON);
 	// alert for testing
     alert(myJSON);
-	localStorage.setItem("BaseTest" + getCurrentProfile() + "-" + openslot, myJSON);
 });
 
 // Reset form
@@ -481,7 +548,7 @@ function compare(a,b){
 }
 // Get tests from JSON data
 var items = [];
-
+var savedtests = [];
 var profile = getCurrentProfile();
 
 for (var i = 1; i < 100; i++)
@@ -495,6 +562,7 @@ else
 {
 var parsedJSON =  JSON.parse(test);
 items.push(parsedJSON);
+savedtests.push(i);
 }
 }
 items.sort(compare);
@@ -514,19 +582,36 @@ var virtualList = app.virtualList.create({
   },
   // List item template
   itemTemplate:
-    '<li>' +
+    '<li class="swipeout deleted-callback{{testnum}}">' +
       '<a href="#" class="item-link item-content">' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
-            '<div class="item-title">{{question}} {{date}}</div>' +
+            '<div class="item-title">{{question}} {{date}} {{truthresult.toFixed(0)}}%Truth</div>' +
           '</div>' +
+		  '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
           '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
         '</div>' +
       '</a>' +
+	  '<div class="swipeout-actions-left">' +
+        '<a href="#" data-confirm="Are you sure you want to delete question {{question}}?" data-confirm-title="Delete Question" class="swipeout-delete">Delete</a></div>' +
     '</li>',
   // Item height
   height: app.theme === 'ios' ? 63 : 73,
-});})
+});
+
+// This function is used to create delete test callback functions
+function createDeleteCallback(testnumber)
+{
+$$('.deleted-callback' + testnumber).on('swipeout:delete', function () {
+  localStorage.removeItem("Test" + getCurrentProfile() + "-" + testnumber);
+});
+}
+// Creates as many on delete callback functions as there are tests
+for (var i = 0; i < savedtests.length; i++)
+{
+createDeleteCallback(savedtests[i]);
+}
+})
 
 
 /*
@@ -543,7 +628,7 @@ function compare(a,b){
 }
 // Get tests from JSON data
 var items = [];
-
+var savedtests = [];
 var profile = getCurrentProfile();
 
 for (var i = 1; i < 100; i++)
@@ -561,6 +646,7 @@ if (parsedJSON.questionselect == 'Custom Question')
 		parsedJSON.questionselect = parsedJSON.question;
 	}
 items.push(parsedJSON);
+savedtests.push(i);
 }
 }
 items.sort(compare);
@@ -580,7 +666,7 @@ var virtualList = app.virtualList.create({
   },
   // List item template
   itemTemplate:
-    '<li>' +
+    '<li class="swipeout deleted-callback{{testnum}}">' +
       '<a href="#" class="item-link item-content">' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
@@ -589,9 +675,24 @@ var virtualList = app.virtualList.create({
           '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
         '</div>' +
       '</a>' +
+	  '<div class="swipeout-actions-left">' +
+        '<a href="#" data-confirm="Are you sure you want to delete question {{questionselect}}?" data-confirm-title="Delete Question" class="swipeout-delete">Delete</a></div>' +
     '</li>',
   // Item height
   height: app.theme === 'ios' ? 63 : 73,
-});})
+});
+// This function is used to create delete test callback functions
+function createDeleteCallback(testnumber)
+{
+$$('.deleted-callback' + testnumber).on('swipeout:delete', function () {
+  localStorage.removeItem("BaseTest" + getCurrentProfile() + "-" + testnumber);
+});
+}
+// Creates as many on delete callback functions as there are tests
+for (var i = 0; i < savedtests.length; i++)
+{
+createDeleteCallback(savedtests[i]);
+}
+})
 
 
