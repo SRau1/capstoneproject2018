@@ -38,6 +38,72 @@ var profilenum = JSON.parse(currentprof);
 return profilenum;
 }
 
+function calcBaseScores(){
+var sumbaseeye = 0;
+var sumbasebody = 0;
+var sumbasevoice = 0;
+var sumbasemicro = 0;
+var numbasetests = 0;
+
+//	Get results from JSON data
+for (var i = 1; i < 100; i++)
+{
+var retrievedtest = localStorage.getItem("BaseTest" + getCurrentProfile() + "-" + i)
+if (retrievedtest == undefined)
+{
+	continue;
+}
+else
+{
+var parsedJSON =  JSON.parse(retrievedtest);
+// Increase sums
+sumbaseeye += parseInt(parsedJSON.eyeslider);
+sumbasebody += parseInt(parsedJSON.bodyslider);
+sumbasevoice += parseInt(parsedJSON.voiceslider);
+sumbasemicro += parseInt(parsedJSON.microslider);
+numbasetests++;
+}
+}
+// Calculate averages
+var avgbaseeye = sumbaseeye / numbasetests;
+var avgbasebody = sumbasebody / numbasetests;
+var avgbasevoice = sumbasevoice / numbasetests;
+var avgbasemicro = sumbasemicro / numbasetests;
+
+// Calculate maximum variance
+var maximumvariance = 0;
+function calcmaxvariance(avg){
+if (avg <= 5)
+	{
+		maximumvariance += (10 - avg);
+	}
+	else
+	{
+		maximumvariance += avg;
+	}	
+}
+calcmaxvariance(avgbaseeye);
+calcmaxvariance(avgbasebody);
+calcmaxvariance(avgbasevoice);
+calcmaxvariance(avgbasemicro);
+
+// Store averages/variance
+var averages =
+{
+	eyecontact:avgbaseeye,
+	bodylanguage:avgbasebody,
+	voicepattern:avgbasevoice,
+	microexpressions:avgbasemicro,
+	maxvariance:maximumvariance,
+};
+
+var jsonavg = JSON.stringify(averages);
+localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
+// alert for testing
+    alert(jsonavg);
+}
+
+
 // Save profile
 $$('.convert-profileform-to-data').on('click', function(){
   var formData = app.form.convertToData('#profile-form');
@@ -103,7 +169,7 @@ var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
 var parsedbaseavg = JSON.parse(jsonbaseavg);
 if (parsedbaseavg != null)
 {
-document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Body Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Voice Pattern: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2) + "</p><p>Fidgeting: " + parsedbaseavg.fidgeting.toFixed(2);
+document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Body Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Voice Pattern: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2);
 }
 var sumtruth = 0;
 var numtests = 0;
@@ -162,7 +228,7 @@ $$('.convert-testform-to-data').on('click', function(){
 		localStorage.setItem("CurrentTest", null);
 	}
 	else {
-	var testvariance = Math.abs(formData.eyeslider - parsedbaseavg.eyecontact) + Math.abs(formData.bodyslider - parsedbaseavg.bodylanguage) + Math.abs(formData.voiceslider - parsedbaseavg.voicepattern) + Math.abs(formData.microslider - parsedbaseavg.microexpressions) + Math.abs(formData.fidgetslider - parsedbaseavg.fidgeting)
+	var testvariance = Math.abs(formData.eyeslider - parsedbaseavg.eyecontact) + Math.abs(formData.bodyslider - parsedbaseavg.bodylanguage) + Math.abs(formData.voiceslider - parsedbaseavg.voicepattern) + Math.abs(formData.microslider - parsedbaseavg.microexpressions);
 	var liepercent = (testvariance / parsedbaseavg.maxvariance) * 100;
 	formData.lieresult = liepercent;
 	formData.truthresult = 100 - liepercent;
@@ -178,16 +244,10 @@ $$('.convert-testform-to-data').on('click', function(){
 // Reset form
 $$('.reset-form').on('click', function(){
 	document.getElementById('question').value = " ";
-	document.getElementById('eyecheckbox').checked = "";
 	app.range.setValue('#eyeslider', 0);
-	document.getElementById('bodycheckbox').checked = "";
 	app.range.setValue('#bodyslider', 0);
-	document.getElementById('voicecheckbox').checked = "";
 	app.range.setValue('#voiceslider', 0);
-	document.getElementById('microcheckbox').checked = "";
 	app.range.setValue('#microslider', 0);
-	document.getElementById('fidgetcheckbox').checked = "";
-	app.range.setValue('#fidgetslider', 0);
 	});
 })
 
@@ -307,7 +367,6 @@ $$('.reset-baseform').on('click', function(){
 	app.range.setValue('#bodyslider', 0);
 	app.range.setValue('#voiceslider', 0);
 	app.range.setValue('#microslider', 0);
-	app.range.setValue('#fidgetslider', 0);
 	});
 
 // Calculate base scores	
@@ -316,7 +375,6 @@ var sumbaseeye = 0;
 var sumbasebody = 0;
 var sumbasevoice = 0;
 var sumbasemicro = 0;
-var sumbasefidget = 0;
 var numbasetests = 0;
 
 //	Get results from JSON data
@@ -335,7 +393,6 @@ sumbaseeye += parseInt(parsedJSON.eyeslider);
 sumbasebody += parseInt(parsedJSON.bodyslider);
 sumbasevoice += parseInt(parsedJSON.voiceslider);
 sumbasemicro += parseInt(parsedJSON.microslider);
-sumbasefidget += parseInt(parsedJSON.fidgetslider);
 numbasetests++;
 }
 }
@@ -344,7 +401,6 @@ var avgbaseeye = sumbaseeye / numbasetests;
 var avgbasebody = sumbasebody / numbasetests;
 var avgbasevoice = sumbasevoice / numbasetests;
 var avgbasemicro = sumbasemicro / numbasetests;
-var avgbasefidget = sumbasefidget / numbasetests;
 
 // Calculate maximum variance
 var maximumvariance = 0;
@@ -362,7 +418,6 @@ calcmaxvariance(avgbaseeye);
 calcmaxvariance(avgbasebody);
 calcmaxvariance(avgbasevoice);
 calcmaxvariance(avgbasemicro);
-calcmaxvariance(avgbasefidget);
 
 // Store averages/variance
 var averages =
@@ -371,7 +426,6 @@ var averages =
 	bodylanguage:avgbasebody,
 	voicepattern:avgbasevoice,
 	microexpressions:avgbasemicro,
-	fidgeting:avgbasefidget,
 	maxvariance:maximumvariance,
 };
 
@@ -588,8 +642,7 @@ var virtualList = app.virtualList.create({
           '<div class="item-title-row">' +
             '<div class="item-title">{{question}} {{date}} {{truthresult.toFixed(0)}}%Truth</div>' +
           '</div>' +
-		  '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
-          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
+          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}</div>' +
         '</div>' +
       '</a>' +
 	  '<div class="swipeout-actions-left">' +
@@ -672,7 +725,7 @@ var virtualList = app.virtualList.create({
           '<div class="item-title-row">' +
             '<div class="item-title">{{questionselect}} {{date}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}, Fidgeting:{{fidgetslider}}</div>' +
+          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}</div>' +
         '</div>' +
       '</a>' +
 	  '<div class="swipeout-actions-left">' +
@@ -686,6 +739,7 @@ function createDeleteCallback(testnumber)
 {
 $$('.deleted-callback' + testnumber).on('swipeout:delete', function () {
   localStorage.removeItem("BaseTest" + getCurrentProfile() + "-" + testnumber);
+  calcBaseScores();
 });
 }
 // Creates as many on delete callback functions as there are tests
