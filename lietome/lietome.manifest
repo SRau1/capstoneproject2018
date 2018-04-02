@@ -26,13 +26,12 @@ framework7/css/framework7.rtl.min.css
 framework7/js/framework7.js
 framework7/js/framework7.min.js
 framework7/js/framework7.min.js.map
-images/LieToMe.jpg
+images/LieToMe.png
 images/surprise.jpg
 js/app.js
 js/routes.js
 pages/404.html
 pages/about.html
-pages/formtest.html
 pages/history.html
 pages/manual.html
 pages/profiles.html
@@ -42,7 +41,6 @@ launch.png
 pages/basetest.html
 pages/quiz.html
 pages/runPage.html
-pages/baseresult.html
 pages/testresult.html
 pages/quizresult.html
 pages/settings.html
@@ -51,4 +49,4 @@ pages/basehistory.html
 NETWORK:
 *
 
-#v.89
+#v.891111111

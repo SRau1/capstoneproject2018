@@ -169,7 +169,7 @@ var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
 var parsedbaseavg = JSON.parse(jsonbaseavg);
 if (parsedbaseavg != null)
 {
-document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Body Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Voice Pattern: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2);
+document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Physical Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Verbal Language: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2);
 }
 var sumtruth = 0;
 var numtests = 0;
@@ -642,7 +642,7 @@ var virtualList = app.virtualList.create({
           '<div class="item-title-row">' +
             '<div class="item-title">{{question}} {{date}} {{truthresult.toFixed(0)}}%Truth</div>' +
           '</div>' +
-          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}</div>' +
+          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Physical Language:{{bodyslider}}, Verbal Language:{{voiceslider}}, Microexpressions:{{microslider}}</div>' +
         '</div>' +
       '</a>' +
 	  '<div class="swipeout-actions-left">' +
@@ -725,7 +725,7 @@ var virtualList = app.virtualList.create({
           '<div class="item-title-row">' +
             '<div class="item-title">{{questionselect}} {{date}}</div>' +
           '</div>' +
-          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Body Language:{{bodyslider}}, Voice Pattern:{{voiceslider}}, Microexpressions:{{microslider}}</div>' +
+          '<div class="item-subtitle">Eye Contact:{{eyeslider}}, Physical Language:{{bodyslider}}, Verbal Language:{{voiceslider}}, Microexpressions:{{microslider}}</div>' +
         '</div>' +
       '</a>' +
 	  '<div class="swipeout-actions-left">' +
