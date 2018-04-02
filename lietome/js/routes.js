@@ -8,10 +8,6 @@ routes = [
     url: './pages/about.html',
   },
   {
-    path: '/form/',
-    url: './pages/form.html',
-  },
-  {
     path: '/profiles/',
     url: './pages/profiles.html',
   },
@@ -22,10 +18,6 @@ routes = [
   {
     path: '/test/',
     url: './pages/test.html',
-  },
-  {
-    path: '/formtest/',
-    url: './pages/formtest.html',
   },
   {
     path: '/history/',
@@ -42,10 +34,6 @@ routes = [
   {
     path: '/runPage/',
     url: './pages/runPage.html',
-  },
-  {
-    path: '/baseresult/',
-    url: './pages/baseresult.html',
   },
   {
     path: '/testresult/',
@@ -122,7 +110,7 @@ routes = [
       }, 1000);
     },
   },
-  // Default route (404 page). MUST BE THE LAST
+  // Default route (404 page).
   {
     path: '(.*)',
     url: './pages/404.html',
