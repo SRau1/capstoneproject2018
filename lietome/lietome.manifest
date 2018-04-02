@@ -27,7 +27,6 @@ framework7/js/framework7.js
 framework7/js/framework7.min.js
 framework7/js/framework7.min.js.map
 images/LieToMe.png
-images/surprise.jpg
 js/app.js
 js/routes.js
 pages/404.html
@@ -49,4 +48,4 @@ pages/basehistory.html
 NETWORK:
 *
 
-#v.891111111
+#v0.9
