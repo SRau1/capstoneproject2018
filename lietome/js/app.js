@@ -444,7 +444,7 @@ localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
  */
 $$(document).on('page:init','.page[data-name="manual"]', function(){
 	
-var myPhotoBrowserPopupDark = app.photoBrowser.create({
+var eyePhotoBrowser = app.photoBrowser.create({
     photos : [
         {
             html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
@@ -461,8 +461,8 @@ var myPhotoBrowserPopupDark = app.photoBrowser.create({
     theme: 'dark',
     type: 'standalone'
 });
-$$('.pb-standalone-video').on('click', function () {
-    myPhotoBrowserPopupDark.open();
+$$('.pb-eye').on('click', function () {
+    eyePhotoBrowser.open();
 });
 })
 
