@@ -38,13 +38,15 @@ var profilenum = JSON.parse(currentprof);
 return profilenum;
 }
 
+
+/* Function to calculate baseline averages
+*/ 
 function calcBaseScores(){
 var sumbaseeye = 0;
 var sumbasebody = 0;
 var sumbasevoice = 0;
 var sumbasemicro = 0;
 var numbasetests = 0;
-
 //	Get results from JSON data
 for (var i = 1; i < 100; i++)
 {
@@ -69,7 +71,6 @@ var avgbaseeye = sumbaseeye / numbasetests;
 var avgbasebody = sumbasebody / numbasetests;
 var avgbasevoice = sumbasevoice / numbasetests;
 var avgbasemicro = sumbasemicro / numbasetests;
-
 // Calculate maximum variance
 var maximumvariance = 0;
 function calcmaxvariance(avg){
@@ -86,7 +87,6 @@ calcmaxvariance(avgbaseeye);
 calcmaxvariance(avgbasebody);
 calcmaxvariance(avgbasevoice);
 calcmaxvariance(avgbasemicro);
-
 // Store averages/variance
 var averages =
 {
@@ -96,7 +96,6 @@ var averages =
 	microexpressions:avgbasemicro,
 	maxvariance:maximumvariance,
 };
-
 var jsonavg = JSON.stringify(averages);
 localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
 // alert for testing
@@ -104,7 +103,8 @@ localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
 }
 
 
-// Save profile
+
+// Save profile function for New Profile popup
 $$('.convert-profileform-to-data').on('click', function(){
   var formData = app.form.convertToData('#profile-form');
   // Determine open Profile slot for new profile
@@ -371,87 +371,24 @@ $$('.reset-baseform').on('click', function(){
 
 // Calculate base scores	
 $$('.calc-basescores').on('click', function(){
-var sumbaseeye = 0;
-var sumbasebody = 0;
-var sumbasevoice = 0;
-var sumbasemicro = 0;
-var numbasetests = 0;
-
-//	Get results from JSON data
-for (var i = 1; i < 100; i++)
-{
-var retrievedtest = localStorage.getItem("BaseTest" + getCurrentProfile() + "-" + i)
-if (retrievedtest == undefined)
-{
-	continue;
-}
-else
-{
-var parsedJSON =  JSON.parse(retrievedtest);
-// Increase sums
-sumbaseeye += parseInt(parsedJSON.eyeslider);
-sumbasebody += parseInt(parsedJSON.bodyslider);
-sumbasevoice += parseInt(parsedJSON.voiceslider);
-sumbasemicro += parseInt(parsedJSON.microslider);
-numbasetests++;
-}
-}
-// Calculate averages
-var avgbaseeye = sumbaseeye / numbasetests;
-var avgbasebody = sumbasebody / numbasetests;
-var avgbasevoice = sumbasevoice / numbasetests;
-var avgbasemicro = sumbasemicro / numbasetests;
-
-// Calculate maximum variance
-var maximumvariance = 0;
-function calcmaxvariance(avg){
-if (avg <= 5)
-	{
-		maximumvariance += (10 - avg);
-	}
-	else
-	{
-		maximumvariance += avg;
-	}	
-}
-calcmaxvariance(avgbaseeye);
-calcmaxvariance(avgbasebody);
-calcmaxvariance(avgbasevoice);
-calcmaxvariance(avgbasemicro);
-
-// Store averages/variance
-var averages =
-{
-	eyecontact:avgbaseeye,
-	bodylanguage:avgbasebody,
-	voicepattern:avgbasevoice,
-	microexpressions:avgbasemicro,
-	maxvariance:maximumvariance,
-};
-
-var jsonavg = JSON.stringify(averages);
-localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
-// alert for testing
-    alert(jsonavg);
+calcBaseScores();
 });
-
-
-})
+});
 
 
 /*
  Scripts for Manual page
  */
 $$(document).on('page:init','.page[data-name="manual"]', function(){
-	
+// Photo browser for Eye Contact	
 var eyePhotoBrowser = app.photoBrowser.create({
     photos : [
         {
             html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
-            caption: 'Woodkid - Run Boy Run (Official HD Video)'
+            caption: 'Eye Contact'
         },
         {
-            url: './images/LieToMe.jpg',
+            url: './images/LieToMe.png',
             caption: 'Second Caption Text'
         },
         {
@@ -463,6 +400,69 @@ var eyePhotoBrowser = app.photoBrowser.create({
 });
 $$('.pb-eye').on('click', function () {
     eyePhotoBrowser.open();
+});
+// Photo Browser for Physical Language
+var physPhotoBrowser = app.photoBrowser.create({
+    photos : [
+        {
+            html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
+            caption: 'Physical Language'
+        },
+        {
+            url: './images/LieToMe.png',
+            caption: 'Second Caption Text'
+        },
+        {
+            url: 'http://lorempixel.com/1024/1024/sports/3/',
+        },
+    ],
+    theme: 'dark',
+    type: 'standalone'
+});
+$$('.pb-phys').on('click', function () {
+    physPhotoBrowser.open();
+});
+// Photo Browser for Verbal Language
+var verbalPhotoBrowser = app.photoBrowser.create({
+    photos : [
+        {
+            html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
+            caption: 'Verbal Language'
+        },
+        {
+            url: './images/LieToMe.png',
+            caption: 'Second Caption Text'
+        },
+        {
+            url: 'http://lorempixel.com/1024/1024/sports/3/',
+        },
+    ],
+    theme: 'dark',
+    type: 'standalone'
+});
+$$('.pb-verbal').on('click', function () {
+    verbalPhotoBrowser.open();
+});
+// Photo Browser for Microexpressions
+var microPhotoBrowser = app.photoBrowser.create({
+    photos : [
+        {
+            html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
+            caption: 'Microexpressions'
+        },
+        {
+            url: './images/LieToMe.png',
+            caption: 'Second Caption Text'
+        },
+        {
+            url: 'http://lorempixel.com/1024/1024/sports/3/',
+        },
+    ],
+    theme: 'dark',
+    type: 'standalone'
+});
+$$('.pb-micro').on('click', function () {
+    microPhotoBrowser.open();
 });
 })
 
@@ -750,3 +750,18 @@ createDeleteCallback(savedtests[i]);
 })
 
 
+/* Scripts for Quiz page */
+$$(document).on('page:init','.page[data-name="quiz"]', function(){
+
+$$('.check-answer').on('click', function(){
+	
+if (document.getElementById("correctanswer").checked)
+{
+	document.getElementById("quizresult").innerHTML = "Correct answer!";
+}
+else{
+	document.getElementById("quizresult").innerHTML = "Incorrect answer!";
+}
+});
+
+});
