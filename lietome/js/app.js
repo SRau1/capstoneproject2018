@@ -31,13 +31,48 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
+// Save profile function for New Profile popup
+$$('.convert-profileform-to-data').on('click', function(){
+  var formData = app.form.convertToData('#profile-form');
+  // Determine open Profile slot for new profile
+  var openslot;
+		for (var i = 1; i < 100;i++)
+		{
+		var test = localStorage.getItem("Profile" + i);
+		if (test == undefined)
+		{
+			openslot = i;
+			break;
+		}
+		}
+  // Add value of openslot to Profile data
+  formData.slot = openslot;	
+	// Save new profile
+	var myJSON = JSON.stringify(formData);
+	localStorage.setItem("Profile" + openslot, myJSON);
+	// Set new profile as current profile
+	localStorage.setItem("CurrentProfile",openslot);
+});
+// Fill form for testing
+$$('.fill-form-from-data').on('click', function(){
+  var formData = {
+    'name': 'John',
+    'age': '26',
+    'gender': 'Male',
+  }
+  app.form.fillFromData('#profile-form', formData);
+});
+
+/*
+* SHARED FUNCTIONS
+*
+*/
 // Get Current Profile function -  returns current profile number
 function getCurrentProfile(){
 var currentprof = localStorage.getItem("CurrentProfile");
 var profilenum = JSON.parse(currentprof);
 return profilenum;
 }
-
 
 /* Function to calculate baseline averages
 */ 
@@ -102,39 +137,9 @@ localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
     alert(jsonavg);
 }
 
-
-
-// Save profile function for New Profile popup
-$$('.convert-profileform-to-data').on('click', function(){
-  var formData = app.form.convertToData('#profile-form');
-  // Determine open Profile slot for new profile
-  var openslot;
-		for (var i = 1; i < 100;i++)
-		{
-		var test = localStorage.getItem("Profile" + i);
-		if (test == undefined)
-		{
-			openslot = i;
-			break;
-		}
-		}
-  // Add value of openslot to Profile data
-  formData.slot = openslot;	
-	// Save new profile
-	var myJSON = JSON.stringify(formData);
-	localStorage.setItem("Profile" + openslot, myJSON);
-	// Set new profile as current profile
-	localStorage.setItem("CurrentProfile",openslot);
-});
-// Fill form for testing
-$$('.fill-form-from-data').on('click', function(){
-  var formData = {
-    'name': 'John',
-    'age': '26',
-    'gender': 'Male',
-  }
-  app.form.fillFromData('#profile-form', formData);
-});
+/* 
+* END OF SHARED FUNCTIONS
+*/
 
 
 /*
@@ -309,6 +314,8 @@ else
 	}
 }
 });
+
+
 /*
  Scripts for BaseLineTest page
  */
@@ -331,7 +338,6 @@ $$('.input-clear-button').hide();
 }
 }
 })
-
 // Saves baseline test form
 $$('.convert-baseform-to-data').on('click', function(){
   // Save current date to form
@@ -358,7 +364,6 @@ $$('.convert-baseform-to-data').on('click', function(){
 	// alert for testing
     alert(myJSON);
 });
-
 // Reset form
 $$('.reset-baseform').on('click', function(){
 	document.getElementById('questionselect').value = "";
@@ -368,7 +373,6 @@ $$('.reset-baseform').on('click', function(){
 	app.range.setValue('#voiceslider', 0);
 	app.range.setValue('#microslider', 0);
 	});
-
 // Calculate base scores	
 $$('.calc-basescores').on('click', function(){
 calcBaseScores();
@@ -529,7 +533,6 @@ var virtualList = app.virtualList.create({
   // Item height
   height: app.theme === 'ios' ? 63 : 73,
 });
-
 // This function is used to create delete profile callback functions
 function createDeleteCallback(profilenumber)
 {
@@ -569,7 +572,6 @@ for (var i = 0; i < savedprofiles.length; i++)
 {
 createDeleteCallback(savedprofiles[i]);
 }
-
 // This function is used to create select-profile onclick functions
 function createProfileSelect(profilenumber)
 {
@@ -577,15 +579,12 @@ function createProfileSelect(profilenumber)
 	localStorage.setItem("CurrentProfile",profilenumber);
 	});
 }
-
 // Creates as many onclick select-profile functions as there are profiles
 for (var i = 0; i < savedprofiles.length; i++)
 {
 createProfileSelect(savedprofiles[i]);
 }
 	})
-
-
 
 
 /*
