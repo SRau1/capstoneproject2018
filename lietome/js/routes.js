@@ -28,10 +28,6 @@ routes = [
     url: './pages/basetest.html',
   },
   {
-    path: '/quiz/',
-    url: './pages/quiz.html',
-  },
-  {
     path: '/runPage/',
     url: './pages/runPage.html',
   },
@@ -40,16 +36,52 @@ routes = [
     url: './pages/testresult.html',
   },
   {
-    path: '/quizresult/',
-    url: './pages/quizresult.html',
-  },
-  {
     path: '/settings/',
     url: './pages/settings.html',
   },
   {
     path: '/basehistory/',
     url: './pages/basehistory.html',
+  },
+  {
+    path: '/quiz/',
+    url: './pages/quiz.html',
+  },
+  {
+    path: '/quiz2/',
+    url: './pages/quiz2.html',
+  },
+  {
+    path: '/quiz3/',
+    url: './pages/quiz3.html',
+  },
+  {
+    path: '/quiz4/',
+    url: './pages/quiz4.html',
+  },
+  {
+    path: '/quiz5/',
+    url: './pages/quiz5.html',
+  },
+  {
+    path: '/quiz6/',
+    url: './pages/quiz6.html',
+  },
+  {
+    path: '/quiz7/',
+    url: './pages/quiz7.html',
+  },
+  {
+    path: '/quiz8/',
+    url: './pages/quiz8.html',
+  },
+  {
+    path: '/quiz9/',
+    url: './pages/quiz9.html',
+  },
+  {
+    path: '/quiz10/',
+    url: './pages/quiz10.html',
   },
   // Page Loaders & Router
   {

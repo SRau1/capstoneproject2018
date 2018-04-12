@@ -168,7 +168,7 @@ $$('input[name="layout-radio"]').on('change', function () {
 $$(document).on('page:init','.page[data-name="runPage"]', function(){
 var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
 var parsedprof = JSON.parse(jsonprofile);
-document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
+document.getElementById("currentprof").innerHTML = "Current Profile:" + parsedprof.name;
 
 var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
 var parsedbaseavg = JSON.parse(jsonbaseavg);
@@ -195,7 +195,7 @@ var test = localStorage.getItem("Test" + getCurrentProfile() + "-" + i)
 if (numtests != 0)
 {
 var avgtruth =(sumtruth / numtests);
-document.getElementById("averagetruth").innerHTML = "<p>Truth Average: " + avgtruth.toFixed(2) + "%";
+document.getElementById("averagetruth").innerHTML = "Truth Average:" + avgtruth.toFixed(2) + "%";
 }
 });
 
@@ -750,17 +750,43 @@ createDeleteCallback(savedtests[i]);
 
 
 /* Scripts for Quiz page */
-$$(document).on('page:init','.page[data-name="quiz"]', function(){
-
-$$('.check-answer').on('click', function(){
-	
-if (document.getElementById("correctanswer").checked)
+function checkAnswer(question){
+	if (document.getElementById("correctanswer" + question).checked)
 {
-	document.getElementById("quizresult").innerHTML = "Correct answer!";
+	document.getElementById("quizresult" + question).innerHTML = "Correct answer!";
 }
 else{
-	document.getElementById("quizresult").innerHTML = "Incorrect answer!";
+	document.getElementById("quizresult" + question).innerHTML = "Incorrect answer!";
 }
-});
+}
 
+$$(document).on('page:init','.page[data-name="quiz"]', function(){
+$$('.check-answer').on('click', function(){checkAnswer("");});
+});
+$$(document).on('page:init','.page[data-name="quiz2"]', function(){
+$$('.check-answer2').on('click', function(){checkAnswer(2);});
+});
+$$(document).on('page:init','.page[data-name="quiz3"]', function(){
+$$('.check-answer3').on('click', function(){checkAnswer(3);});
+});
+$$(document).on('page:init','.page[data-name="quiz4"]', function(){
+$$('.check-answer4').on('click', function(){checkAnswer(4);});
+});
+$$(document).on('page:init','.page[data-name="quiz5"]', function(){
+$$('.check-answer5').on('click', function(){checkAnswer(5);});
+});
+$$(document).on('page:init','.page[data-name="quiz6"]', function(){
+$$('.check-answer6').on('click', function(){checkAnswer(6);});
+});
+$$(document).on('page:init','.page[data-name="quiz7"]', function(){
+$$('.check-answer7').on('click', function(){checkAnswer(7);});
+});
+$$(document).on('page:init','.page[data-name="quiz8"]', function(){
+$$('.check-answer8').on('click', function(){checkAnswer(8);});
+});
+$$(document).on('page:init','.page[data-name="quiz9"]', function(){
+$$('.check-answer9').on('click', function(){checkAnswer(9);});
+});
+$$(document).on('page:init','.page[data-name="quiz10"]', function(){
+$$('.check-answer10').on('click', function(){checkAnswer(10);});
 });
