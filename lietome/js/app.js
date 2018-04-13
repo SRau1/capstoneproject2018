@@ -7,21 +7,6 @@ var app  = new Framework7({
   id: 'io.framework7.app', // App bundle ID
   name: 'LieToMe', // App name
   theme: 'auto', // Automatic theme detection
-  // App root data
-  data: function () {
-    return {
-      user: {
-        firstName: 'John',
-        lastName: 'Doe',
-      },
-    };
-  },
-  // App root methods
-  methods: {
-    helloWorld: function () {
-      app.dialog.alert('Hello World!');
-    },
-  },
   // App routes
   routes: routes,
 });
@@ -30,6 +15,18 @@ var app  = new Framework7({
 var mainView = app.views.create('.view-main', {
   url: '/'
 });
+
+// Set Theme to selected theme
+if (localStorage.getItem("CurrentColorTheme") != null)
+{
+	$$('.view').removeClass('color-theme-pink color-theme-blue color-theme-red color-theme-black color-theme-gray color-theme-orange color-theme-yellow color-theme-green color-theme-white');
+    $$('.view').addClass(localStorage.getItem("CurrentColorTheme"));
+}
+if (localStorage.getItem("CurrentTheme") != null)
+{
+	$$('.view').removeClass('theme-white theme-dark');
+    $$('.view').addClass(localStorage.getItem("CurrentTheme"));
+}
 
 // Save profile function for New Profile popup
 $$('.convert-profileform-to-data').on('click', function(){
@@ -52,6 +49,7 @@ $$('.convert-profileform-to-data').on('click', function(){
 	localStorage.setItem("Profile" + openslot, myJSON);
 	// Set new profile as current profile
 	localStorage.setItem("CurrentProfile",openslot);
+	mainView.router.navigate('/runPage/');
 });
 // Fill form for testing
 $$('.fill-form-from-data').on('click', function(){
@@ -135,6 +133,10 @@ var jsonavg = JSON.stringify(averages);
 localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
 // alert for testing
     alert(jsonavg);
+if (mainView.router.currentRoute.url == '/basetest/')
+{
+	mainView.router.navigate('/runPage/');
+}	
 }
 
 /* 
@@ -151,12 +153,14 @@ $$('input[name="color-radio"]').on('change', function () {
         if (this.checked) {
           $$('.view').removeClass('color-theme-pink color-theme-blue color-theme-red color-theme-black color-theme-gray color-theme-orange color-theme-yellow color-theme-green color-theme-white');
           $$('.view').addClass('color-theme-' + $$(this).val());
+		  localStorage.setItem("CurrentColorTheme", 'color-theme-' + $$(this).val());
         }
       });
 $$('input[name="layout-radio"]').on('change', function () {
         if (this.checked) {
           $$('.view').removeClass('theme-white theme-dark');
           $$('.view').addClass(this.value);
+		  localStorage.setItem("CurrentTheme", this.value);
         }
       });
 })
@@ -168,11 +172,11 @@ $$('input[name="layout-radio"]').on('change', function () {
 $$(document).on('page:init','.page[data-name="runPage"]', function(){
 var jsonprofile = localStorage.getItem("Profile" + getCurrentProfile());
 var parsedprof = JSON.parse(jsonprofile);
-document.getElementById("currentprof").innerHTML = "Current Profile:" + parsedprof.name;
+document.getElementById("currentprof").innerHTML = "Current Profile: " + parsedprof.name;
 
 var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
 var parsedbaseavg = JSON.parse(jsonbaseavg);
-if (parsedbaseavg != null)
+if (parsedbaseavg.eyecontact != null)
 {
 document.getElementById("averagebases").innerHTML = "<p>Eye Contact: " + parsedbaseavg.eyecontact.toFixed(2) + "</p><p>Physical Language: " + parsedbaseavg.bodylanguage.toFixed(2) + "</p><p>Verbal Language: " + parsedbaseavg.voicepattern.toFixed(2) + "</p><p>Microexpressions: " + parsedbaseavg.microexpressions.toFixed(2);
 }
@@ -195,7 +199,7 @@ var test = localStorage.getItem("Test" + getCurrentProfile() + "-" + i)
 if (numtests != 0)
 {
 var avgtruth =(sumtruth / numtests);
-document.getElementById("averagetruth").innerHTML = "Truth Average:" + avgtruth.toFixed(2) + "%";
+document.getElementById("averagetruth").innerHTML = "Truth Average: " + avgtruth.toFixed(2) + "%";
 }
 });
 
@@ -228,7 +232,7 @@ $$('.convert-testform-to-data').on('click', function(){
 	// Perform Truth Analysis
 	var jsonbaseavg = localStorage.getItem("BaselineResults" + getCurrentProfile());
     var parsedbaseavg = JSON.parse(jsonbaseavg);
-	if (parsedbaseavg == null)
+	if (parsedbaseavg.eyecontact == null)
 	{
 		localStorage.setItem("CurrentTest", null);
 	}
@@ -243,6 +247,7 @@ $$('.convert-testform-to-data').on('click', function(){
 	localStorage.setItem("CurrentTest", myJSON);
 	// alert for testing
     alert(myJSON);
+	mainView.router.navigate('/testresult/');
 	}
 });
 
@@ -518,7 +523,7 @@ var virtualList = app.virtualList.create({
   // List item template
   itemTemplate:
     '<li class="swipeout deleted-callback{{slot}}">' +
-      '<a href="/runPage/" class="item-link item-content swipeout-content select-profile{{slot}}">' +
+      '<a href="#" class="item-link item-content swipeout-content select-profile{{slot}}">' +
 	  '<div class="item-media"><i class="icon icon-f7"></i></div>' +
         '<div class="item-inner">' +
           '<div class="item-title-row">' +
@@ -577,6 +582,7 @@ function createProfileSelect(profilenumber)
 {
 	$$('.select-profile' + profilenumber).on('click', function(){
 	localStorage.setItem("CurrentProfile",profilenumber);
+	mainView.router.navigate('/runPage/');
 	});
 }
 // Creates as many onclick select-profile functions as there are profiles
