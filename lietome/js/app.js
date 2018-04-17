@@ -51,15 +51,12 @@ $$('.convert-profileform-to-data').on('click', function(){
 	localStorage.setItem("CurrentProfile",openslot);
 	mainView.router.navigate('/runPage/');
 });
-// Fill form for testing
-$$('.fill-form-from-data').on('click', function(){
-  var formData = {
-    'name': 'John',
-    'age': '26',
-    'gender': 'Male',
-  }
-  app.form.fillFromData('#profile-form', formData);
-});
+// Reset form
+$$('.reset-profile-form').on('click', function(){
+	document.getElementById('profname').value = "";
+	document.getElementById('profage').value = "";
+	document.getElementById('profgender').value = "";
+	});
 
 /*
 * SHARED FUNCTIONS
@@ -131,8 +128,6 @@ var averages =
 };
 var jsonavg = JSON.stringify(averages);
 localStorage.setItem("BaselineResults" + getCurrentProfile(), jsonavg);
-// alert for testing
-    alert(jsonavg);
 if (mainView.router.currentRoute.url == '/basetest/')
 {
 	mainView.router.navigate('/runPage/');
@@ -202,8 +197,6 @@ var avgtruth =(sumtruth / numtests);
 document.getElementById("averagetruth").innerHTML = "Truth Average: " + avgtruth.toFixed(2) + "%";
 }
 });
-
-
 /*
  Scripts for Test page
  */
@@ -245,8 +238,6 @@ $$('.convert-testform-to-data').on('click', function(){
 	var myJSON = JSON.stringify(formData);
 	localStorage.setItem("Test" + getCurrentProfile() + "-" + openslot, myJSON);
 	localStorage.setItem("CurrentTest", myJSON);
-	// alert for testing
-    alert(myJSON);
 	mainView.router.navigate('/testresult/');
 	}
 });
@@ -273,49 +264,49 @@ if (parsedcurrenttest == null)
 }
 else
 {
-	if (parseInt(parsedcurrenttest.lieresult) >= 0 && parseInt(parsedcurrenttest.lieresult) < 10)
+	if (parseFloat(parsedcurrenttest.lieresult) >= 0 && parseFloat(parsedcurrenttest.lieresult) < 10)
 	{
-		document.getElementById('resultcontent').innerHTML = "Truth: Extremely Likely";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/truthexlike.png" alt="truthexlike Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 10 && parseInt(parsedcurrenttest.lieresult) <= 20)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 10 && parseFloat(parsedcurrenttest.lieresult) <= 20)
 	{
-		document.getElementById('resultcontent').innerHTML = "Truth: Very Likely";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/truthvlike.png" alt="truthvlike Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 20 && parseInt(parsedcurrenttest.lieresult) <= 30)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 20 && parseFloat(parsedcurrenttest.lieresult) <= 30)
 	{
-		document.getElementById('resultcontent').innerHTML = "Truth: Likely";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/truthlike.png" alt="truthlike Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 30 && parseInt(parsedcurrenttest.lieresult) <= 40)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 30 && parseFloat(parsedcurrenttest.lieresult) <= 40)
 	{
-		document.getElementById('resultcontent').innerHTML = "Truth: Somewhat Likely";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/truthsomelike.png" alt="truthsomelike Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 40 && parseInt(parsedcurrenttest.lieresult) <= 50)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 40 && parseFloat(parsedcurrenttest.lieresult) <= 50)
 	{
-		document.getElementById('resultcontent').innerHTML = "Truth: Slightly";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/truthslight.png" alt="truthslight Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 50 && parseInt(parsedcurrenttest.lieresult) <= 60)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 50 && parseFloat(parsedcurrenttest.lieresult) <= 60)
 	{
-		document.getElementById('resultcontent').innerHTML = "Lie: Slightly";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/lieslight.png" alt="lieslight Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 60 && parseInt(parsedcurrenttest.lieresult) <= 70)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 60 && parseFloat(parsedcurrenttest.lieresult) <= 70)
 	{
-		document.getElementById('resultcontent').innerHTML = "Lie: Somewhat Likely";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/liesomelike.png" alt="liesomelike Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 70 && parseInt(parsedcurrenttest.lieresult) <= 80)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 70 && parseFloat(parsedcurrenttest.lieresult) <= 80)
 	{
-		document.getElementById('resultcontent').innerHTML = "Lie: Likely";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/lielike.png" alt="lielike Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 80 && parseInt(parsedcurrenttest.lieresult) <= 90)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 80 && parseFloat(parsedcurrenttest.lieresult) <= 90)
 	{
-		document.getElementById('resultcontent').innerHTML = "Lie: Very Likely";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/lievlike.png" alt="lievlike Icon">';
 	}
-	else if (parseInt(parsedcurrenttest.lieresult) > 90 && parseInt(parsedcurrenttest.lieresult) <= 100)
+	else if (parseFloat(parsedcurrenttest.lieresult) > 90 && parseFloat(parsedcurrenttest.lieresult) <= 100)
 	{
-		document.getElementById('resultcontent').innerHTML = "Lie: Extremely Likely";
+		document.getElementById('resultcontent').innerHTML = '<img src="./images/lieexlike.png" alt="lieexlike Icon">';
 	}
 	else
 	{
-	document.getElementById('resultcontent').innerHTML = "Results inconclusive.";
+	document.getElementById('resultcontent').innerHTML = '<img src="./images/resinc.png" alt="resinc Icon">';
 	}
 }
 });
@@ -366,8 +357,7 @@ $$('.convert-baseform-to-data').on('click', function(){
 	// Save new test
 	var myJSON = JSON.stringify(formData);
 	localStorage.setItem("BaseTest" + getCurrentProfile() + "-" + openslot, myJSON);
-	// alert for testing
-    alert(myJSON);
+	alert("Question saved.");
 });
 // Reset form
 $$('.reset-baseform').on('click', function(){
