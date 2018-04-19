@@ -383,15 +383,12 @@ $$(document).on('page:init','.page[data-name="manual"]', function(){
 var eyePhotoBrowser = app.photoBrowser.create({
     photos : [
         {
-            html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
-            caption: 'Eye Contact'
+            url: './images/shifteyes.jpg',
+			caption: 'Shifty Eyes'
         },
         {
-            url: './images/LieToMe.png',
-            caption: 'Second Caption Text'
-        },
-        {
-            url: 'http://lorempixel.com/1024/1024/sports/3/',
+            url: './images/pupil.jpg',
+            caption: 'Dialated Pupils Can Indicate Lying'
         },
     ],
     theme: 'dark',
@@ -404,16 +401,13 @@ $$('.pb-eye').on('click', function () {
 var physPhotoBrowser = app.photoBrowser.create({
     photos : [
         {
-            html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
-            caption: 'Physical Language'
+            url: './images/posture.jpg',
+            caption: 'Posture'
         },
-        {
-            url: './images/LieToMe.png',
-            caption: 'Second Caption Text'
-        },
-        {
-            url: 'http://lorempixel.com/1024/1024/sports/3/',
-        },
+		{
+			url: './images/alligatortears.jpg',
+			caption: 'Alligator Tears'
+		},
     ],
     theme: 'dark',
     type: 'standalone'
@@ -421,40 +415,26 @@ var physPhotoBrowser = app.photoBrowser.create({
 $$('.pb-phys').on('click', function () {
     physPhotoBrowser.open();
 });
+
+
 // Photo Browser for Verbal Language
 var verbalPhotoBrowser = app.photoBrowser.create({
     photos : [
-        {
-            html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
-            caption: 'Verbal Language'
-        },
-        {
-            url: './images/LieToMe.png',
-            caption: 'Second Caption Text'
-        },
-        {
-            url: 'http://lorempixel.com/1024/1024/sports/3/',
-        },
     ],
-    theme: 'dark',
-    type: 'standalone'
+   theme: 'dark',
+   type: 'standalone'
 });
 $$('.pb-verbal').on('click', function () {
     verbalPhotoBrowser.open();
 });
+
+
 // Photo Browser for Microexpressions
 var microPhotoBrowser = app.photoBrowser.create({
     photos : [
         {
-            html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0" frameborder="0" allowfullscreen></iframe>',
-            caption: 'Microexpressions'
-        },
-        {
-            url: './images/LieToMe.png',
-            caption: 'Second Caption Text'
-        },
-        {
-            url: 'http://lorempixel.com/1024/1024/sports/3/',
+            url: './images/microex.jpg',
+            caption: 'The Microexpressions of Different Emotions'
         },
     ],
     theme: 'dark',
