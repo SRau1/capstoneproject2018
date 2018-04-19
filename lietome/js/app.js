@@ -201,7 +201,8 @@ document.getElementById("averagetruth").innerHTML = "Truth Average: " + avgtruth
  Scripts for Test page
  */
 $$(document).on('page:init','.page[data-name="test"]', function(){
-$$('.date').hide();	
+$$('.date').hide();
+createPhotoBrowsers();	
 $$('.convert-testform-to-data').on('click', function(){
 // Save current date to form
 	var today = new Date();
@@ -319,6 +320,7 @@ $$(document).on('page:init','.page[data-name="basetest"]', function(){
 $$('.question').hide();
 $$('.input-clear-button').hide();
 $$('.date').hide();
+createPhotoBrowsers();
 // Displays question text field when Custom Question is selected
 $$('.enableinput').on('change', function(){
 {
@@ -378,8 +380,8 @@ calcBaseScores();
 /*
  Scripts for Manual page
  */
-$$(document).on('page:init','.page[data-name="manual"]', function(){
-// Photo browser for Eye Contact	
+ function createPhotoBrowsers(){
+	 // Photo browser for Eye Contact	
 var eyePhotoBrowser = app.photoBrowser.create({
     photos : [
         {
@@ -443,6 +445,10 @@ var microPhotoBrowser = app.photoBrowser.create({
 $$('.pb-micro').on('click', function () {
     microPhotoBrowser.open();
 });
+ }
+ 
+$$(document).on('page:init','.page[data-name="manual"]', function(){
+createPhotoBrowsers();
 })
 
 
